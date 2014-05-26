@@ -1,0 +1,23 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ocse.hse.Fragments.NFCFragment">
+    <!-- TODO: Update blank fragment layout -->
+    <ImageView
+        android:id="@+id/imgNFCTag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon_nfc_tag"
+        android:layout_centerHorizontal="true"
+        />
+    <TextView
+        android:id="@+id/lblNFC"
+        android:layout_below="@id/imgNFCTag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:text="将NFC卡贴近手机背面进行识别"/>
+
+</RelativeLayout>

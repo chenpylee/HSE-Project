@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">HSE现场督察管理</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_nfcread">HSE资格确认</string>
+    <string name="error">错误</string>
+    <string name="no_nfc">本型号手机不支持NFC读取</string>
+    <string name="nfc_disabled">NFC功能被关闭. 请进入设置菜单开启NFC设置.</string>
+    <string name="action_task_refresh">刷新</string>
+    <string name="action_task_settings">设置终端信息</string>
+    <string name="title_activity_device_settings">终端信息</string>
+    <string name="label_device_holder">持有人姓名：</string>
+    <string name="label_device_phonenumber">本机号码：</string>
+    <string name="label_device_id">机器序列号IMEI：</string>
+    <string name="btn_settings_ok">完成</string>
+    <string name="title_activity_server_setting">HSE服务器设置</string>
+    <string name="label_server_ip">Server IP:</string>
+    <string name="btn_server_ok">确定</string>
+    <string name="title_activity_organ_list">OrganListActivity</string>
+    <string name="action_organ_list_about">检查信息</string>
+    <string name="title_activity_about_task">AboutTaskActivity</string>
+    <string name="label_task_name">检查名称：</string>
+    <string name="label_task_period">检查时间：</string>
+    <string name="label_task_description">检查内容：</string>
+    <string name="title_activity_tab">TabActivity</string>
+    <string name="title_section1">NFC卡识别</string>
+    <string name="title_section2">隐患记录</string>
+    <string name="title_section3">现场评分</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="nfc_fragment_name">NFC卡识别</string>
+    <string name="record_fragment_name">隐患记录</string>
+    <string name="evaluate_fragment_name">现场评分</string>
+    <string name="title_activity_card_read">CardReadActivity</string>
+    <string name="title_activity_card_read_tagID">卡TAG ID</string>
+    <string name="title_activity_card_read_tagType">卡类型</string>
+
+</resources>
