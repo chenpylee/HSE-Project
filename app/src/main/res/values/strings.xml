@@ -35,5 +35,10 @@
     <string name="title_activity_card_read">CardReadActivity</string>
     <string name="title_activity_card_read_tagID">卡TAG ID</string>
     <string name="title_activity_card_read_tagType">卡类型</string>
+    <string name="title_activity_jsycard">JSYCardActivity</string>
+    <string name="title_activity_cbscard">CBSCardActivity</string>
+    <string name="title_activity_photo_detail">PhotoDetailActivity</string>
+    <string name="action_person_about">个人信息</string>
+    <string name="title_activity_jsydetail">JSYDetailActivity</string>
 
 </resources>

@@ -24,6 +24,8 @@ public class ApplicationConstants {
 
     public static final String APP_BUNDLE_TASK_INFO_KEY="TASK_INFO_KEY";
     public static final String APP_BUNDLE_ORGAN_INFO_KEY="ORGAN_INFO_KEY";
+    public static final String APP_BUNDLE_CARD_INFO_JSON_KEY="CARD_INFO_JSON_KEY";
+    public static final String APP_BUNDLE_PHOTO_URL_KEY= "PHOTO_URL";
     /**AboutTaskActivity**/
     public static final String ACTIVITY_TITLE_ABOUT_TASK="检查任务内容";
 

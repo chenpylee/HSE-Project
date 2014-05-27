@@ -2,5 +2,15 @@
 <resources>
     <!--Application-->
     <color name="task_info_color">#2c3e50</color>
-
+    <color name="module_title_detail_text_color">#3b3b3b</color>
+    <color name="module_content_detail_text_color">#3b3b3b</color>
+    <color name="rounded_background">#f2f2f2</color>
+    <color name="image_background">#f2f2f2</color>
+    <color name="card_info_text_color">#3b3b3b</color>
+    <color name="card_info_title_text_color">#9fa0a0</color>
+    <!--dividers-->
+    <color name="information_horizontal_divider_color">#f2f2f2</color>
+    <color name="card_info_section_text_color">#808181</color>
+    <color name="card_info_valid_text_color">#3b3b3b</color>
+    <color name="card_info_invalid_text_color">#e74c3c</color>
 </resources>

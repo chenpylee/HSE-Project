@@ -3,15 +3,18 @@ package com.ocse.hse.app;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.telephony.TelephonyManager;
 
 import com.ocse.hse.Models.DeviceInfo;
+import com.ocse.hse.Models.HSESQLiteHelper;
 
 /**
  * Created by leehaining on 5/7/14.
  */
 public class ApplicationController extends Application {
     public static Context context;
+    public static SQLiteDatabase sqLiteDatabase;
     @Override
     public void onCreate(){
         super.onCreate();
@@ -36,5 +39,13 @@ public class ApplicationController extends Application {
         TelephonyManager tMgr = (TelephonyManager)context.getSystemService(TELEPHONY_SERVICE);
         DeviceInfo mDeviceInfo=new DeviceInfo(tMgr);
         return mDeviceInfo;
+    }
+    public static SQLiteDatabase getSqLiteDatabase()
+    {
+        if(sqLiteDatabase==null)
+        {
+            sqLiteDatabase=HSESQLiteHelper.getInstance(context);
+        }
+        return sqLiteDatabase;
     }
 }

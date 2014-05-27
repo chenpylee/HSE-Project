@@ -79,6 +79,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" >
         </activity>
+        <!--
         <activity
             android:name="com.ocse.hse.CardReadActivity"
             android:label="@string/title_activity_card_read"
@@ -89,6 +90,31 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+        </activity>
+        -->
+        <activity
+            android:name="com.ocse.hse.Activities.JSYCardActivity"
+            android:label="@string/title_activity_jsycard"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" >
+        </activity>
+        <activity
+            android:name="com.ocse.hse.Activities.CBSCardActivity"
+            android:label="@string/title_activity_cbscard"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" >
+        </activity>
+        <activity
+            android:name="com.ocse.hse.Activities.PhotoDetailActivity"
+            android:label="@string/title_activity_photo_detail"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" >
+        </activity>
+        <activity
+            android:name="com.ocse.hse.Activities.JSYDetailActivity"
+            android:label="@string/title_activity_jsydetail"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme">
         </activity>
     </application>
 

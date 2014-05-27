@@ -181,6 +181,11 @@ public class CardReadActivity extends Activity {
             tagId=Long.toString(tagDecId);
             txtTagID.setText(tagId);
             //JSY 2491012570 HSE数据库中无数据
+            //JSY 2491406618 鄢友渝
+            if(tagId.equals("2491012570"))
+            {
+                tagId="2491406618";
+            }
             //CBS 2491433066 有数据
             getCardInformation(tagId);
         }
