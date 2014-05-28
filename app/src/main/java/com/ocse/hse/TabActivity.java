@@ -99,6 +99,10 @@ public class TabActivity extends Activity implements ActionBar.TabListener,OnFra
         if(organInfo!=null) {
             actionBar.setSubtitle("受检单位:"+organInfo.getOrganName());
         }
+        if(taskInfo!=null&&organInfo!=null)
+        {
+            ApplicationController.saveCurrentTaskAndOrganID(taskInfo.getTaskID(),organInfo.getOrganID());
+        }
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
@@ -214,8 +218,8 @@ public class TabActivity extends Activity implements ActionBar.TabListener,OnFra
 
             if(tagId.equals("2491012570"))
             {
-                tagId="2491406618";//
-                tagId="2490992986";//内部准驾证，驾驶证，从业资格证 存在过期证件
+                //tagId="2491406618";//
+                //tagId="2490992986";//内部准驾证，驾驶证，从业资格证 存在过期证件
             }
             if(tagId.equals("2491433066"))
             {
@@ -281,6 +285,15 @@ public class TabActivity extends Activity implements ActionBar.TabListener,OnFra
                     int result = -1;
                     if(response.has(ApplicationConstants.JSON_RESULT))
                     {
+                        if(response.isNull("content"))
+                        {
+                            TagBasicInfo tag = new TagBasicInfo(ApplicationController.getCurrentTaskID(), ApplicationController.getCurrentOrganID(), tagID, "{}");
+                            tag.saveToDB();
+                        }
+                        else {
+                            TagBasicInfo tag = new TagBasicInfo(ApplicationController.getCurrentTaskID(), ApplicationController.getCurrentOrganID(), tagID, response.getJSONObject("content").toString());
+                            tag.saveToDB();
+                        }
 
                         result=response.getInt(ApplicationConstants.JSON_RESULT);
                         if(result==1) {
@@ -306,6 +319,7 @@ public class TabActivity extends Activity implements ActionBar.TabListener,OnFra
                             Toast.makeText(TabActivity.this, msg, Toast.LENGTH_SHORT).show();
                             fillNoDataContent(tagID);
                         }
+
 
                     }
                 }catch (JSONException e)
@@ -368,6 +382,7 @@ public class TabActivity extends Activity implements ActionBar.TabListener,OnFra
         AppLog.i("承包商卡");
          **/
         //Toast.makeText(this,"承包商卡",Toast.LENGTH_SHORT).show();
+
         Intent intent=new Intent(this, CBSCardActivity.class);
         intent.putExtra(ApplicationConstants.APP_BUNDLE_CARD_INFO_JSON_KEY,contentObject.toString());
         startActivity(intent);
@@ -397,6 +412,9 @@ public class TabActivity extends Activity implements ActionBar.TabListener,OnFra
          **/
         //Toast.makeText(this,"无数据",Toast.LENGTH_SHORT).show();
         showMessage("无效卡号","在HSE数据库中没有找到卡号("+tagID+")的证件信息。");
+        if(nfcFragment!=null) {
+            nfcFragment.updateCardList();
+        }
     }
     //End NFC Card Reading
     @Override
@@ -540,11 +558,6 @@ public class TabActivity extends Activity implements ActionBar.TabListener,OnFra
         //More stuff
     }
 
-    //SQLiteDatabase test
-    private void dbTest()
-    {
-        TagBasicInfo tag=new TagBasicInfo("123456");
-        tag.saveToDB();
-    }
+
 
 }

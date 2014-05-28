@@ -6,8 +6,8 @@
     <!-- TODO: Update blank fragment layout -->
     <ImageView
         android:id="@+id/imgNFCTag"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:src="@drawable/icon_nfc_tag"
         android:layout_centerHorizontal="true"
         />
@@ -19,5 +19,11 @@
         android:textSize="18sp"
         android:gravity="center"
         android:text="将NFC卡贴近手机背面进行识别"/>
-
+    <ListView
+        android:id="@+id/cardList"
+        android:layout_below="@id/lblNFC"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </ListView>
 </RelativeLayout>

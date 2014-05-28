@@ -48,4 +48,22 @@ public class ApplicationController extends Application {
         }
         return sqLiteDatabase;
     }
+    public static void saveCurrentTaskAndOrganID(String taskID,String organID)
+    {
+        SharedPreferences preferences = context.getSharedPreferences(ApplicationConstants.APP_PREFERENCE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(ApplicationConstants.APP_PREFERENCE_CURRENT_TASK_ID, taskID);
+        editor.putString(ApplicationConstants.APP_PREFERENCE_CURRENT_ORGAN_ID, organID);
+        editor.commit();
+    }
+    public static String getCurrentTaskID(){
+        SharedPreferences preferences = context.getSharedPreferences(ApplicationConstants.APP_PREFERENCE, Context.MODE_PRIVATE);
+        String taskID=preferences.getString(ApplicationConstants.APP_PREFERENCE_CURRENT_TASK_ID,"0");
+        return taskID;
+    }
+    public static String getCurrentOrganID(){
+        SharedPreferences preferences = context.getSharedPreferences(ApplicationConstants.APP_PREFERENCE, Context.MODE_PRIVATE);
+        String organID=preferences.getString(ApplicationConstants.APP_PREFERENCE_CURRENT_ORGAN_ID,"0");
+        return organID;
+    }
 }

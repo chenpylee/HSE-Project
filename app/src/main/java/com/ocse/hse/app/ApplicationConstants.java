@@ -21,7 +21,8 @@ public class ApplicationConstants {
     public static final String APP_PREFERENCE_DEVICE_VERSION="DEVICE_VERSION";
     public static final String APP_PREFERENCE_DEVICE_IMEI="DEVICE_IMEI";
     public static final String APP_PREFERENCE_DEVICE_PHONE_NUMBER="DEVICE_PHONE_NUMBER";
-
+    public static final String APP_PREFERENCE_CURRENT_TASK_ID="CURRENT_TASK_ID";
+    public static final String APP_PREFERENCE_CURRENT_ORGAN_ID="CURRENT_ORGAN_ID";
     public static final String APP_BUNDLE_TASK_INFO_KEY="TASK_INFO_KEY";
     public static final String APP_BUNDLE_ORGAN_INFO_KEY="ORGAN_INFO_KEY";
     public static final String APP_BUNDLE_CARD_INFO_JSON_KEY="CARD_INFO_JSON_KEY";

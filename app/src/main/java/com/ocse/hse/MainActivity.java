@@ -159,6 +159,7 @@ public class MainActivity extends Activity {
     private void getTaskList()
     {
         //get task list
+        String taskID="1";
         String taskName="华北局安全生产大检查";
         String taskDescription="中石化系统组织的安全大检查，联系人：HSE办公室 0371-68977666";
         String startDate="2014-05-21";
@@ -176,11 +177,11 @@ public class MainActivity extends Activity {
         }
         ArrayList<OrganInfo> taskOrgansList=new ArrayList<OrganInfo>();
 
-        OrganInfo organ1=new OrganInfo("201","采油厂","002","华北石油局");
-        OrganInfo organ2=new OrganInfo("202","勘探队","002","华北石油局");
+        OrganInfo organ1=new OrganInfo("990","第一采油厂/甘陕指挥部","587","华北分公司");
+        OrganInfo organ2=new OrganInfo("983","工程监督中心","587","华北分公司");
         taskOrgansList.add(organ1);
         taskOrgansList.add(organ2);
-        TaskInfo task1=new TaskInfo(taskName,taskStartDate,taskEndDate,taskDescription,taskOrgansList);
+        TaskInfo task1=new TaskInfo(taskID,taskName,taskStartDate,taskEndDate,taskDescription,taskOrgansList);
 
         taskName="钻井作业安全5月检查";
         taskDescription="各钻井队每月的定期HSE检查";
@@ -194,8 +195,8 @@ public class MainActivity extends Activity {
         {
             AppLog.e(e1.getMessage().toString());
         }
-
-        TaskInfo task2=new TaskInfo(taskName,taskStartDate,taskEndDate,taskDescription,taskOrgansList);
+        taskID="2";
+        TaskInfo task2=new TaskInfo(taskID,taskName,taskStartDate,taskEndDate,taskDescription,taskOrgansList);
         taskList.clear();
         taskList.add(task1);
         taskList.add(task2);

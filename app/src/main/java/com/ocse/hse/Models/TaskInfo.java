@@ -10,12 +10,14 @@ import java.util.Iterator;
  * Created by leehaining on 14-5-22.
  */
 public class TaskInfo implements Serializable {
+    private String taskID;
     private String taskName;//检查任务名称
     private Date taskStartDate;//检查开始时间
     private Date taskEndDate;//检查结束时间
     private String taskDescription;//检查任务描述
     private ArrayList<OrganInfo> taskOrgansList;//受检单位列表
-    public TaskInfo(String taskName,Date taskStartDate,Date taskEndDate,String taskDescription,ArrayList<OrganInfo>taskOrgans){
+    public TaskInfo(String taskID,String taskName,Date taskStartDate,Date taskEndDate,String taskDescription,ArrayList<OrganInfo>taskOrgans){
+        this.taskID=taskID;
         this.taskName=taskName;
         this.taskStartDate=taskStartDate;
         this.taskEndDate=taskEndDate;
@@ -27,6 +29,9 @@ public class TaskInfo implements Serializable {
             OrganInfo item = it.next();
             this.taskOrgansList.add(item);
         }
+    }
+    public String getTaskID(){
+        return this.taskID;
     }
     public String getTaskName(){
         return this.taskName;

@@ -2,15 +2,30 @@ package com.ocse.hse.Fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
+import com.ocse.hse.Activities.CBSCardActivity;
+import com.ocse.hse.Activities.JSYCardActivity;
 import com.ocse.hse.Interfaces.OnFragmentInteractionListener;
+import com.ocse.hse.Models.TagAdapter;
+import com.ocse.hse.Models.TagBasicInfo;
 import com.ocse.hse.R;
 import com.ocse.hse.app.AppLog;
+import com.ocse.hse.app.ApplicationConstants;
+import com.ocse.hse.app.ApplicationController;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,7 +47,9 @@ public class NFCFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
-
+    private ListView cardListView;
+    private ArrayList<TagBasicInfo> dataArray;
+    private TagAdapter dataAdapter;
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -82,7 +99,43 @@ public class NFCFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState)
     {
+        cardListView=(ListView)getActivity().findViewById(R.id.cardList);
+        dataArray=new ArrayList<TagBasicInfo>();
+        dataAdapter=new TagAdapter(getActivity(),dataArray);
+        cardListView.setAdapter(dataAdapter);
+        cardListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                TagBasicInfo item=(TagBasicInfo)dataAdapter.getItem(position);
+                if(!item.getCardJson().equals("{}"))
+                {
+                    String jsonString=item.getCardJson();
+                    String type="";
+                    try{
+                        JSONObject contentObject=new JSONObject(jsonString);
+                        type=contentObject.optString("type","");
+                    }catch (JSONException jsonException)
+                    {
 
+                    }
+                    if(type.equals("JSY"))
+                    {
+                        Intent intent=new Intent(getActivity(), JSYCardActivity.class);
+                        intent.putExtra(ApplicationConstants.APP_BUNDLE_CARD_INFO_JSON_KEY,jsonString);
+                        startActivity(intent);
+                        getActivity().overridePendingTransition(R.anim.in_push_right_to_left,R.anim.push_down);
+                    }
+                    else if(type.equals("CBS"))
+                    {
+                        Intent intent=new Intent(getActivity(), CBSCardActivity.class);
+                        intent.putExtra(ApplicationConstants.APP_BUNDLE_CARD_INFO_JSON_KEY,jsonString);
+                        startActivity(intent);
+                        getActivity().overridePendingTransition(R.anim.in_push_right_to_left, R.anim.push_down);
+                    }
+                }
+
+            }
+        });
     }
     @Override
     public void onAttach(Activity activity) {
@@ -104,6 +157,39 @@ public class NFCFragment extends Fragment {
     public void onResume() {
         super.onResume();
         AppLog.i("NFCFragment onResume");
+        ArrayList<TagBasicInfo> cardList=TagBasicInfo.printAllTagsInDBByTaskAndOrgan(ApplicationController.getCurrentTaskID(),ApplicationController.getCurrentOrganID());
+        if(cardList.size()!=dataArray.size())
+        {
+            dataArray.clear();
+            Iterator<TagBasicInfo> it = cardList.iterator();
+            while(it.hasNext())
+            {
+                TagBasicInfo item = it.next();
+                dataArray.add(item);
+            }
+            dataAdapter.refillData(dataArray);
+            if(dataArray.size()>0) {
+                cardListView.smoothScrollToPosition(0);
+            }
+        }
+    }
+    public void updateCardList()
+    {
+        ArrayList<TagBasicInfo> cardList=TagBasicInfo.printAllTagsInDBByTaskAndOrgan(ApplicationController.getCurrentTaskID(),ApplicationController.getCurrentOrganID());
+        if(cardList.size()!=dataArray.size()&&cardListView!=null)
+        {
+            dataArray.clear();
+            Iterator<TagBasicInfo> it = cardList.iterator();
+            while(it.hasNext())
+            {
+                TagBasicInfo item = it.next();
+                dataArray.add(item);
+            }
+            dataAdapter.refillData(dataArray);
+            if(dataArray.size()>0) {
+                cardListView.smoothScrollToPosition(0);
+            }
+        }
     }
 
     @Override
