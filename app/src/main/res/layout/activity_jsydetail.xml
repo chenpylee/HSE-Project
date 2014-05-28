@@ -200,17 +200,17 @@ tools:context="com.ocse.hse.Activities.JSYDetailActivity">
                 android:background="@color/information_horizontal_divider_color"/>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/card_info_height_large"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
                 >
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/card_info_height"
                     android:text="家庭地址："
                     android:textSize="@dimen/card_info_title_text_size"
                     android:textColor="@color/card_info_title_text_color"
-                    android:gravity="right"/>
+                    android:gravity="right|center_vertical"/>
                 <TextView
                     android:id="@+id/txtJTZZ"
                     android:layout_width="wrap_content"

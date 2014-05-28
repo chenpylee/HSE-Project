@@ -31,6 +31,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!--
         <activity
             android:name="com.ocse.hse.NFCReadActivity"
             android:alwaysRetainTaskState="true"
@@ -45,6 +46,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        -->
         <activity
             android:name="com.ocse.hse.DeviceSettingsActivity"
             android:label="@string/title_activity_device_settings"

@@ -25,7 +25,7 @@
     <string name="label_task_period">检查时间：</string>
     <string name="label_task_description">检查内容：</string>
     <string name="title_activity_tab">TabActivity</string>
-    <string name="title_section1">NFC卡识别</string>
+    <string name="title_section1">证件检查</string>
     <string name="title_section2">隐患记录</string>
     <string name="title_section3">现场评分</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>

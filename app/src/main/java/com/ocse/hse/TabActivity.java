@@ -218,13 +218,14 @@ public class TabActivity extends Activity implements ActionBar.TabListener,OnFra
 
             if(tagId.equals("2491012570"))
             {
+                tagId="2490449290";//王新平
                 //tagId="2491406618";//
                 //tagId="2490992986";//内部准驾证，驾驶证，从业资格证 存在过期证件
             }
             if(tagId.equals("2491433066"))
             {
                 tagId="2491433066";
-                tagId="2736026811";
+                //tagId="2736026811";
             }
 
 

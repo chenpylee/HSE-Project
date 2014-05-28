@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:textSize="18sp"
         android:gravity="center"
-        android:text="将NFC卡贴近手机背面进行识别"/>
+        android:text="将HSE证件贴近手机背面进行识别"/>
     <ListView
         android:id="@+id/cardList"
         android:layout_below="@id/lblNFC"
