@@ -256,9 +256,9 @@ public class JSYCardActivity extends Activity {
                 }
                 else
                 {
-                    strStatusNBZJZ="（有效）";
+                    strStatusNBZJZ="（有效期内）";
                     txtStatusNBZJZ.setTextColor(getResources().getColor(R.color.card_info_valid_text_color));
-                    strAlertStatusNBZJZ="有效";
+                    strAlertStatusNBZJZ="有效期内";
                     txtAlertStatusNBZJZ.setTextColor(getResources().getColor(R.color.card_info_valid_text_color));
                 }
             }catch (ParseException parseException)
@@ -269,7 +269,7 @@ public class JSYCardActivity extends Activity {
         else
         {
             strStatusNBZJZ="";
-            strAlertStatusNBZJZ="无";
+            strAlertStatusNBZJZ="未注明有效时间";
         }
         txtStatusNBZJZ.setText(strStatusNBZJZ);
         txtAlertStatusNBZJZ.setText(strAlertStatusNBZJZ);
@@ -287,9 +287,9 @@ public class JSYCardActivity extends Activity {
                 }
                 else
                 {
-                    strStatusJSZ="（有效）";
+                    strStatusJSZ="（有效期内）";
                     txtStatusJSZ.setTextColor(getResources().getColor(R.color.card_info_valid_text_color));
-                    strAlertStatusJSZ="有效";
+                    strAlertStatusJSZ="有效期内";
                     txtAlertStatusJSZ.setTextColor(getResources().getColor(R.color.card_info_valid_text_color));
                 }
             }catch (ParseException parseException)
@@ -300,7 +300,7 @@ public class JSYCardActivity extends Activity {
         else
         {
             strStatusJSZ="";
-            strAlertStatusJSZ="无";
+            strAlertStatusJSZ="未注明有效时间";
         }
         txtStatusJSZ.setText(strStatusJSZ);
         txtAlertStatusJSZ.setText(strAlertStatusJSZ);
@@ -318,9 +318,9 @@ public class JSYCardActivity extends Activity {
                 }
                 else
                 {
-                    strStatusCYZGZ="（有效）";
+                    strStatusCYZGZ="（有效期内）";
                     txtStatusCYZGZ.setTextColor(getResources().getColor(R.color.card_info_valid_text_color));
-                    strAlertStatusCYZGZ="有效";
+                    strAlertStatusCYZGZ="有效期内";
                     txtAlertStatusCYZGZ.setTextColor(getResources().getColor(R.color.card_info_valid_text_color));
                 }
             }catch (ParseException parseException)
@@ -331,7 +331,7 @@ public class JSYCardActivity extends Activity {
         else
         {
             strStatusCYZGZ="";
-            strAlertStatusCYZGZ="无";
+            strAlertStatusCYZGZ="未注明有效时间";
         }
         txtStatusCYZGZ.setText(strStatusCYZGZ);
         txtAlertStatusCYZGZ.setText(strAlertStatusCYZGZ);

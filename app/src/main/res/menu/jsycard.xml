@@ -5,5 +5,5 @@ tools:context="com.ocse.hse.Activities.JSYCardActivity" >
 <item android:id="@+id/action_person_about"
     android:icon="@drawable/ic_action_about"
     android:title="@string/action_person_about"
-    android:showAsAction="always"/>
+    android:showAsAction="always|withText"/>
 </menu>

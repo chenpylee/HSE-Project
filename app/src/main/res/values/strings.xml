@@ -39,6 +39,8 @@
     <string name="title_activity_cbscard">CBSCardActivity</string>
     <string name="title_activity_photo_detail">PhotoDetailActivity</string>
     <string name="action_person_about">个人信息</string>
+    <string name="action_cbs_about">承包商信息</string>
     <string name="title_activity_jsydetail">JSYDetailActivity</string>
+    <string name="title_activity_cbsdetail">CBSDetailActivity</string>
 
 </resources>

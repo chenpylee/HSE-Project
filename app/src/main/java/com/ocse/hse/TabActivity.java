@@ -215,7 +215,12 @@ public class TabActivity extends Activity implements ActionBar.TabListener,OnFra
             if(tagId.equals("2491012570"))
             {
                 tagId="2491406618";//
-                //tagId="2490992986";//内部准驾证，驾驶证，从业资格证
+                tagId="2490992986";//内部准驾证，驾驶证，从业资格证 存在过期证件
+            }
+            if(tagId.equals("2491433066"))
+            {
+                tagId="2491433066";
+                tagId="2736026811";
             }
 
 
@@ -362,8 +367,9 @@ public class TabActivity extends Activity implements ActionBar.TabListener,OnFra
         containerLayout.addView(contentView);
         AppLog.i("承包商卡");
          **/
-        Toast.makeText(this,"承包商卡",Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this,"承包商卡",Toast.LENGTH_SHORT).show();
         Intent intent=new Intent(this, CBSCardActivity.class);
+        intent.putExtra(ApplicationConstants.APP_BUNDLE_CARD_INFO_JSON_KEY,contentObject.toString());
         startActivity(intent);
         overridePendingTransition(R.anim.in_push_right_to_left,R.anim.push_down);
     }
@@ -375,7 +381,7 @@ public class TabActivity extends Activity implements ActionBar.TabListener,OnFra
         containerLayout.addView(contentView);
         AppLog.i("驾驶员卡");
          **/
-        Toast.makeText(this,"驾驶员卡",Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this,"驾驶员卡",Toast.LENGTH_SHORT).show();
         Intent intent=new Intent(this, JSYCardActivity.class);
         intent.putExtra(ApplicationConstants.APP_BUNDLE_CARD_INFO_JSON_KEY,contentObject.toString());
         startActivity(intent);
