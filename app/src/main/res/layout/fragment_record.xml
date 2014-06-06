@@ -1,13 +1,39 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.ocse.hse.Fragments.RecordFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:id="@+id/btnContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/record_fragment_name" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="3"
+        android:gravity="center">
+    <Button
+        android:id="@+id/btnAddRecord"
+        android:drawableLeft="@drawable/ic_action_new"
+        android:layout_width="0dp"
+        android:layout_weight="2"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_background"
+        android:textAlignment="center"
+        android:text="添加隐患信息"
+        />
+    </LinearLayout>
+    <View
+        android:id="@+id/divider"
+        android:layout_below="@id/btnContainer"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/information_horizontal_divider_height"
+        android:background="@color/information_horizontal_divider_color"/>
+    <ListView
+        android:id="@+id/recordList"
+        android:layout_below="@id/divider"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
-</FrameLayout>
+</RelativeLayout>

@@ -42,5 +42,8 @@
     <string name="action_cbs_about">承包商信息</string>
     <string name="title_activity_jsydetail">JSYDetailActivity</string>
     <string name="title_activity_cbsdetail">CBSDetailActivity</string>
+    <string name="title_activity_add_record">AddRecordActivity</string>
+    <string name="title_activity_view_record">ViewRecordActivity</string>
+    <string name="title_activity_edit_record">EditRecordActivity</string>
 
 </resources>

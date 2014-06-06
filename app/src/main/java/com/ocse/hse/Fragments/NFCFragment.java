@@ -9,7 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 
 import com.ocse.hse.Activities.CBSCardActivity;
 import com.ocse.hse.Activities.JSYCardActivity;
@@ -26,6 +28,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -50,6 +53,8 @@ public class NFCFragment extends Fragment {
     private ListView cardListView;
     private ArrayList<TagBasicInfo> dataArray;
     private TagAdapter dataAdapter;
+    private String selectedCardType;
+    private Spinner cardTypeSpinner;
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -78,6 +83,7 @@ public class NFCFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        selectedCardType="";
         AppLog.i("NFCFragment created.");
     }
 
@@ -99,6 +105,48 @@ public class NFCFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState)
     {
+        cardTypeSpinner=(Spinner)getActivity().findViewById(R.id.cardTypeSpinner);
+        List<String> list = new ArrayList<String>();
+        list.add("全部证件");
+        list.add("承包商证件");
+        list.add("驾驶员证件");
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_spinner_item, list);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        cardTypeSpinner.setAdapter(spinnerAdapter);
+        cardTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch (position)
+                {
+                    case 0: {
+                        selectedCardType="";
+                        break;
+                    }
+                    case 1:{
+                        selectedCardType="CBS";
+                        break;
+                    }
+                    case 2:
+                    {
+                        selectedCardType="JSY";
+                        break;
+                    }
+                    default:
+                    {
+                        selectedCardType="";
+                        break;
+                    }
+                }
+                updateCardList();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         cardListView=(ListView)getActivity().findViewById(R.id.cardList);
         dataArray=new ArrayList<TagBasicInfo>();
         dataAdapter=new TagAdapter(getActivity(),dataArray);
@@ -157,7 +205,7 @@ public class NFCFragment extends Fragment {
     public void onResume() {
         super.onResume();
         AppLog.i("NFCFragment onResume");
-        ArrayList<TagBasicInfo> cardList=TagBasicInfo.printAllTagsInDBByTaskAndOrgan(ApplicationController.getCurrentTaskID(),ApplicationController.getCurrentOrganID());
+        ArrayList<TagBasicInfo> cardList=TagBasicInfo.printAllTagsInDBByTaskAndOrgan(ApplicationController.getCurrentTaskID(),ApplicationController.getCurrentOrganID(),selectedCardType);
         if(cardList.size()!=dataArray.size())
         {
             dataArray.clear();
@@ -175,7 +223,7 @@ public class NFCFragment extends Fragment {
     }
     public void updateCardList()
     {
-        ArrayList<TagBasicInfo> cardList=TagBasicInfo.printAllTagsInDBByTaskAndOrgan(ApplicationController.getCurrentTaskID(),ApplicationController.getCurrentOrganID());
+        ArrayList<TagBasicInfo> cardList=TagBasicInfo.printAllTagsInDBByTaskAndOrgan(ApplicationController.getCurrentTaskID(),ApplicationController.getCurrentOrganID(),selectedCardType);
         if(cardList.size()!=dataArray.size()&&cardListView!=null)
         {
             dataArray.clear();

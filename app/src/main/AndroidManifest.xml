@@ -122,7 +122,27 @@
             android:name="com.ocse.hse.Activities.CBSDetailActivity"
             android:label="@string/title_activity_cbsdetail"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme" >
+        </activity>
+        <activity
+            android:name="com.ocse.hse.Activities.AddRecordActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_add_record"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan" >
+        </activity>
+        <activity
+            android:name="com.ocse.hse.Activities.ViewRecordActivity"
+            android:label="@string/title_activity_view_record"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" >
+        </activity>
+        <activity
+            android:name="com.ocse.hse.Activities.EditRecordActivity"
+            android:label="@string/title_activity_edit_record"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" >
         </activity>
     </application>
 

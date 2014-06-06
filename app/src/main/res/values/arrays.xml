@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array
+        name="record_option_array">
+        <item>查看记录信息</item>
+        <item>编辑记录信息</item>
+        <item>删除记录信息</item>
+    </string-array>
+</resources>

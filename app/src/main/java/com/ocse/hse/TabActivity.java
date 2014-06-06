@@ -141,6 +141,7 @@ public class TabActivity extends Activity implements ActionBar.TabListener,OnFra
         mPendingIntent = PendingIntent.getActivity(this, 0,
                 new Intent(this, ((Object) this).getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
         processIntent(getIntent());
+        ApplicationController.setAndCheckDirectories();
     }
 
     @Override

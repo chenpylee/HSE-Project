@@ -479,13 +479,13 @@ tools:context="com.ocse.hse.Activities.CBSCardActivity">
                 android:background="@color/information_horizontal_divider_color"/>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/card_info_height"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
                 >
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/card_info_height"
                     android:text="业务范围："
                     android:textSize="@dimen/card_info_title_text_size"
                     android:textColor="@color/card_info_title_text_color"

@@ -13,4 +13,9 @@
     <color name="card_info_section_text_color">#808181</color>
     <color name="card_info_valid_text_color">#3b3b3b</color>
     <color name="card_info_invalid_text_color">#e74c3c</color>
+    <!--buttons-->
+    <color name="btn_pressed_color">#b3b3b3</color>
+    <color name="btn_color">#00ffffff</color>
+    <!--Images-->
+
 </resources>

@@ -1,16 +1,32 @@
 package com.ocse.hse.Fragments;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ListView;
 
+import com.ocse.hse.Activities.AddRecordActivity;
+import com.ocse.hse.Activities.EditRecordActivity;
+import com.ocse.hse.Activities.ViewRecordActivity;
 import com.ocse.hse.Interfaces.OnFragmentInteractionListener;
+import com.ocse.hse.Models.RecordInfo;
+import com.ocse.hse.Models.RecordInfoAdapter;
 import com.ocse.hse.R;
 import com.ocse.hse.app.AppLog;
+import com.ocse.hse.app.ApplicationConstants;
+import com.ocse.hse.app.ApplicationController;
+
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,7 +48,10 @@ public class RecordFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
-
+    private Button btnAddRecord;
+    private ListView recordList;
+    private ArrayList<RecordInfo> dataArray;
+    private RecordInfoAdapter dataAdapter;
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -61,6 +80,7 @@ public class RecordFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        //ApplicationController.printDirecotryInformation();
         AppLog.i("RecordFragment created.");
     }
 
@@ -71,6 +91,109 @@ public class RecordFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_record, container, false);
     }
 
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState)
+    {
+        btnAddRecord=(Button)view.findViewById(R.id.btnAddRecord);
+        btnAddRecord.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GoAddRecordActivity();
+            }
+        });
+        recordList=(ListView)view.findViewById(R.id.recordList);
+        dataArray=new ArrayList<RecordInfo>();
+        dataAdapter=new RecordInfoAdapter(getActivity(),dataArray);
+        recordList.setAdapter(dataAdapter);
+        recordList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                final RecordInfo item=(RecordInfo)dataAdapter.getItem(position);
+                Intent intent=new Intent(getActivity(), ViewRecordActivity.class);
+                intent.putExtra(ApplicationConstants.APP_BUNDLE_RECORD,item);
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.in_push_right_to_left, R.anim.push_down);
+            }
+        });
+        recordList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                final RecordInfo item=(RecordInfo)dataAdapter.getItem(position);
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("隐患记录")
+                        .setItems(R.array.record_option_array, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // The 'which' argument contains the index position
+                                // of the selected item
+                                switch (which)
+                                {
+                                    case 0://查看
+                                    {
+                                        Intent intent=new Intent(getActivity(), ViewRecordActivity.class);
+                                        intent.putExtra(ApplicationConstants.APP_BUNDLE_RECORD,item);
+                                        startActivity(intent);
+                                        getActivity().overridePendingTransition(R.anim.in_push_right_to_left, R.anim.push_down);
+                                        break;
+                                    }
+                                    case 1://编辑
+                                    {
+                                        Intent intent=new Intent(getActivity(), EditRecordActivity.class);
+                                        intent.putExtra(ApplicationConstants.APP_BUNDLE_RECORD,item);
+                                        startActivity(intent);
+                                        getActivity().overridePendingTransition(R.anim.in_push_right_to_left, R.anim.push_down);
+                                        break;
+                                    }
+                                    case 2://删除
+                                    {
+                                        removeRecord(item.getRecordID());
+                                        break;
+                                    }
+                                    default:
+                                        break;
+                                }
+                            }
+                        });
+                AlertDialog alertDialog=builder.create();
+                alertDialog.show();
+                return false;
+            }
+        });
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        AppLog.i("RecordFragment onResume");
+        ArrayList<RecordInfo> cardList=RecordInfo.getRecordsFromDBByOrganID(ApplicationController.getCurrentTaskID(),ApplicationController.getCurrentOrganID());
+        if(cardList.size()!=dataArray.size())
+        {
+            dataArray.clear();
+            Iterator<RecordInfo> it = cardList.iterator();
+            while(it.hasNext())
+            {
+                RecordInfo item = it.next();
+                dataArray.add(item);
+            }
+            dataAdapter.refillData(dataArray);
+            if(dataArray.size()>0) {
+                recordList.smoothScrollToPosition(0);
+            }
+        }
+    }
+    private void updateRecordList()
+    {
+        ArrayList<RecordInfo> cardList=RecordInfo.getRecordsFromDBByOrganID(ApplicationController.getCurrentTaskID(),ApplicationController.getCurrentOrganID());
+        if(cardList.size()!=dataArray.size())
+        {
+            dataArray.clear();
+            Iterator<RecordInfo> it = cardList.iterator();
+            while(it.hasNext())
+            {
+                RecordInfo item = it.next();
+                dataArray.add(item);
+            }
+            dataAdapter.refillData(dataArray);
+        }
+    }
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
@@ -101,5 +224,35 @@ public class RecordFragment extends Fragment {
         super.onSaveInstanceState(outState);
     }
 
+    private void GoAddRecordActivity()
+    {
+        Intent intent=new Intent(getActivity(), AddRecordActivity.class);
+        startActivity(intent);
+        getActivity().overridePendingTransition(R.anim.in_push_right_to_left, R.anim.push_down);
+    }
+
+    private void removeRecord(final String recordID)
+    {
+        AlertDialog dialog= new AlertDialog.Builder(getActivity()).setPositiveButton("确定",new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                onRemoveConfirmed(recordID);
+            }
+        }).setNeutralButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        }).create();
+
+        dialog.setTitle("删除");
+        dialog.setMessage("此隐患记录将被删除");
+        dialog.show();
+    }
+    private void onRemoveConfirmed(String recordID)
+    {
+        RecordInfo.removeRecord(recordID,ApplicationController.getCurrentTaskID(),ApplicationController.getCurrentOrganID());
+        updateRecordList();
+    }
 
 }

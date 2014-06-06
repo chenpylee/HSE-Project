@@ -9,6 +9,8 @@ import android.telephony.TelephonyManager;
 import com.ocse.hse.Models.DeviceInfo;
 import com.ocse.hse.Models.HSESQLiteHelper;
 
+import java.io.File;
+
 /**
  * Created by leehaining on 5/7/14.
  */
@@ -66,4 +68,81 @@ public class ApplicationController extends Application {
         String organID=preferences.getString(ApplicationConstants.APP_PREFERENCE_CURRENT_ORGAN_ID,"0");
         return organID;
     }
+    public static void printDirecotryInformation(){
+        File recordsDir = context.getDir("records", Context.MODE_PRIVATE);
+        AppLog.i("Start setDirectories");
+        if(!recordsDir.exists()) {
+            recordsDir.mkdir();
+
+        }
+        else
+        {
+            AppLog.i("Directory Exists."+recordsDir.getPath().toString());
+        }
+
+        String[] files=recordsDir.list();
+        AppLog.i("Total:"+Integer.toString(files.length));
+        if(files!=null)
+        {
+            for(int i=0;i<files.length;i++)
+            {
+                AppLog.i("/data/data/com.ocse.hse/"+files[i]);
+            }
+        }
+
+    }
+    public static void setAndCheckDirectories()
+    {
+        //You can not pass a directory structure (e.g. a/b/c) to GetDir()
+        //http://stackoverflow.com/questions/15141342/android-create-directory-hierarchy
+        File dir = context.getFilesDir();
+        File recordImagesPreviewFolder = new File(dir, "records/preview");
+        createDirectory(recordImagesPreviewFolder);
+        File recordImagesContentFolder=new File(dir,"records/content");
+        createDirectory(recordImagesContentFolder);
+    }
+    private static void createDirectory(File dir)
+    {
+        if(!dir.exists())
+        {
+            try{
+                Boolean done=dir.mkdirs();
+                if(done)
+                {
+                    AppLog.i("Creating directory "+dir.getAbsolutePath().toString()+" OK");
+                }
+                else
+                {
+                    AppLog.i("Creating directory "+dir.getAbsolutePath().toString()+" Failed");
+                }
+            }catch (Exception e)
+            {
+                AppLog.i("Creating directory "+dir.getAbsolutePath().toString()+" failed."+e.getMessage().toString());
+            }
+        }
+        else
+        {
+            AppLog.i(dir.getAbsolutePath().toString()+" already exists.");
+        }
+    }
+    public static File getFile(String directory,String fileName)
+    {
+        File dir = context.getFilesDir();
+        File resultFile = new File(dir, directory+File.separator+fileName);
+        return resultFile;
+    }
+    public static File[] listFiles(String directory)
+    {
+        File dir = context.getFilesDir();
+        File resultDir = new File(dir, directory);
+        File[] files=resultDir.listFiles();
+        return files;
+    }
+    public static Boolean fileExists(String directory,String fileName)
+    {
+        File dir = context.getFilesDir();
+        File resultFile = new File(dir, directory+File.separator+fileName);
+        return resultFile.exists();
+    }
+
 }

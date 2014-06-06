@@ -37,13 +37,13 @@ tools:context="com.ocse.hse.Activities.CBSDetailActivity">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:gravity="center_vertical"
                 >
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/card_info_height"
-                    android:text="注册地址："
+                    android:text="注册地址"
                     android:textSize="@dimen/card_info_title_text_size"
                     android:textColor="@color/card_info_title_text_color"
                     android:gravity="right|center_vertical"/>
@@ -51,10 +51,10 @@ tools:context="com.ocse.hse.Activities.CBSDetailActivity">
                     android:id="@+id/txtZCDZ"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="天津开发区1"
-                    android:autoLink="phone"
-                    android:paddingLeft="@dimen/left_field_padding_small"
-                    android:textSize="@dimen/card_info_text_size_small"
+                    android:ellipsize="marquee"
+                    android:text=""
+                    android:padding="@dimen/left_field_padding_small"
+                    android:textSize="12sp"
                     android:textColor="@color/card_info_text_color"
                     />
             </LinearLayout>
@@ -65,13 +65,13 @@ tools:context="com.ocse.hse.Activities.CBSDetailActivity">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:gravity="center_vertical"
                 >
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/card_info_height"
-                    android:text="行政许可："
+                    android:text="行政许可"
                     android:textSize="@dimen/card_info_title_text_size"
                     android:textColor="@color/card_info_title_text_color"
                     android:gravity="right|center_vertical"/>
@@ -80,8 +80,8 @@ tools:context="com.ocse.hse.Activities.CBSDetailActivity">
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="(津)FM安全1"
-                    android:paddingLeft="@dimen/left_field_padding_small"
-                    android:textSize="@dimen/card_info_text_size_small"
+                    android:padding="@dimen/left_field_padding_small"
+                    android:textSize="12sp"
                     android:textColor="@color/card_info_text_color"
                     />
             </LinearLayout>

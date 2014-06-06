@@ -8,6 +8,9 @@ import com.ocse.hse.app.AppLog;
 import com.ocse.hse.app.ApplicationController;
 import com.ocse.hse.app.Utilities;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 /**
@@ -60,11 +63,24 @@ public class TagBasicInfo {
          "card_info TEXT,"+
          "tag_time TEXT"+
          */
+        String type="";
+        try{
+            JSONObject contentObject=new JSONObject(this.cardJson);
+            if(contentObject!=null)
+            {
+                type=contentObject.optString("type","");
+            }
+
+        }catch (JSONException jsonException)
+        {
+
+        }
         SQLiteDatabase db= ApplicationController.getSqLiteDatabase();
         ContentValues values = new ContentValues();
         values.put("task_id", this.getTaskID());
         values.put("organ_id", this.getOrganID());
         values.put("tag_id", this.getTagID());
+        values.put("card_type",type);
         values.put("card_info", this.getCardJson());
         values.put("tag_time", this.getTagTime());
         long result=db.insert(HSESQLiteHelper.TABLE_CARD_READ, null, values);
@@ -90,12 +106,17 @@ public class TagBasicInfo {
         cursor.close();
         return tagList;
     }
-    public static ArrayList<TagBasicInfo> printAllTagsInDBByTaskAndOrgan(String taskID,String organID)
+    public static ArrayList<TagBasicInfo> printAllTagsInDBByTaskAndOrgan(String taskID,String organID,String type)
     {
         SQLiteDatabase db= ApplicationController.getSqLiteDatabase();
         //query (String table, String[] columns, String selection, String[] selectionArgs, String groupBy, String having, String orderBy)
         String selection="task_id=? AND organ_id=?";
         String[] selectionArgs=new String[]{taskID,organID};
+        if(!type.equals(""))
+        {
+            selection="task_id=? AND organ_id=? AND card_type=?";
+            selectionArgs=new String[]{taskID,organID,type};
+        }
         String orderBy="_id DESC";
         Cursor cursor = db.query(HSESQLiteHelper.TABLE_CARD_READ,null,selection,selectionArgs,null,null,orderBy);
         ArrayList<TagBasicInfo> tagList=new ArrayList<TagBasicInfo>();
