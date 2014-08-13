@@ -6,4 +6,46 @@
         <item>编辑记录信息</item>
         <item>删除记录信息</item>
     </string-array>
+    <string-array name="service_name_array">
+        <item>安全大检查</item>
+        <item>企业及承包商资质查验</item>
+        <item>人员证件查验</item>
+        <item>HSE新闻</item>
+        <item>设置</item>
+    </string-array>
+    <string-array name="service_description_array">
+        <item>证件查验、隐患记录、现场打分</item>
+        <item>承包商HSE资格确认证信息查验</item>
+        <item>机动车准驾证等个人证件查验</item>
+        <item>华北局华北分公司HSE新闻</item>
+        <item>服务器及终端参数设置</item>
+    </string-array>
+    <string-array name="service_icon_array">
+        <item>@drawable/ic_action_audit</item>
+        <item>@drawable/ic_action_group</item>
+        <item>@drawable/ic_action_person</item>
+        <item>@drawable/ic_action_event</item>
+        <item>@drawable/ic_action_settings_dark</item>
+    </string-array>
+
+    <string-array name="self_check_array">
+        <item>例行检查</item>
+        <item>隐患追踪</item>
+        <item>设置检查内容</item>
+    </string-array>
+    <string-array name="self_check_description_array">
+        <item>各单位日常安全检查、自查自纠</item>
+        <item>历次检查中发现的隐患记录</item>
+        <item>选择、设置检查项目</item>
+    </string-array>
+    <string-array name="self_check_icon_array">
+        <item>@drawable/ic_action_regular</item>
+        <item>@drawable/ic_action_history_record</item>
+        <item>@drawable/ic_action_settings_dark</item>
+    </string-array>
+
+    <string-array name="self_check_action_list">
+        <item>显示全部项目</item>
+        <item>显示隐患项目</item>
+    </string-array>
 </resources>

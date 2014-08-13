@@ -12,11 +12,14 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.ocse.hse.Models.JCDWInfo;
 import com.ocse.hse.Models.RecordInfo;
 import com.ocse.hse.R;
 import com.ocse.hse.app.AppLog;
@@ -44,6 +47,14 @@ public class ViewRecordActivity extends Activity {
     static final String DIR_RECORD_PREVIEW="records/preview";
     static final String DIR_RECORD_CONTENT="records/content";
     String record_id,record_task_id,record_organ_id,record_description,record_contact,record_phone,record_created,record_updated;
+    EditText txtRuleLv3,txtRuleContent;
+    //History
+    Boolean isHistory;
+    LinearLayout bottomBar;
+    Button btnPass;
+    Button btnNoPass;
+    //检查单位
+    EditText txtOrgan;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,11 +66,58 @@ public class ViewRecordActivity extends Activity {
         actionBar.setIcon(R.drawable.icon_hse_actionbar);
         actionBar.setTitle("查看隐患信息");
         imageFilepaths=new ArrayList<String>();
+        isHistory=false;
+
         Bundle bundle=getIntent().getExtras();
         if(bundle!=null)
         {
             recordInfo= (RecordInfo) bundle.getSerializable(ApplicationConstants.APP_BUNDLE_RECORD);
             imageFilepaths=recordInfo.getImagePathList();//image name list
+            isHistory=bundle.getBoolean(ApplicationConstants.APP_BUNDLE_IS_HISTORY,false);
+        }
+        bottomBar=(LinearLayout)findViewById(R.id.bottomBar);
+        if(!isHistory)
+        {
+            bottomBar.setVisibility(View.GONE);
+        }
+        else
+        {
+            bottomBar.setVisibility(View.VISIBLE);
+            btnPass=(Button)findViewById(R.id.btnPass);
+            btnNoPass=(Button)findViewById(R.id.btnNoPass);
+            btnPass.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //quitActivity();
+                    showUpdateHistoryRecordActivity();
+                }
+            });
+            btnNoPass.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    quitActivity();
+                }
+            });
+        }
+        txtRuleLv3=(EditText)findViewById(R.id.txtRuleLv3);
+        txtRuleContent=(EditText)findViewById(R.id.txtRuleContent);
+        if(recordInfo!=null)
+        {
+            txtRuleLv3.setText(recordInfo.getRuleLv3());
+            txtRuleContent.setText(recordInfo.getRuleContent());
+        }
+
+        ArrayList<JCDWInfo> organList= JCDWInfo.getJCDWByJR(ApplicationController.getCurrentTaskID());
+        txtOrgan=(EditText)findViewById(R.id.txtOrgan);
+        for(int i=0;i<organList.size();i++)
+        {
+            int jcdw_id=organList.get(i).getJR_DEPTID();
+            String jcdw_str_id=Integer.toString(jcdw_id);
+            if(jcdw_str_id.equals(recordInfo.getOrganID()))
+            {
+                txtOrgan.setText(organList.get(i).getJR_DWMC());
+                break;
+            }
         }
         txtCreated=(EditText)findViewById(R.id.txtCreated);
         txtDescription=(EditText)findViewById(R.id.txtDescription);
@@ -103,7 +161,9 @@ public class ViewRecordActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.view_record, menu);
+        if(!isHistory) {
+            getMenuInflater().inflate(R.menu.view_record, menu);
+        }
         return true;
     }
 
@@ -242,5 +302,12 @@ public class ViewRecordActivity extends Activity {
         startActivity(intent);
         overridePendingTransition(R.anim.in_push_right_to_left, R.anim.push_down);
         finish();
+    }
+    private void showUpdateHistoryRecordActivity()
+    {
+        Intent intent=new Intent(this, AddHistoryUpdateActivity.class);
+        intent.putExtra(ApplicationConstants.APP_BUNDLE_RECORD,recordInfo);
+        startActivity(intent);
+        overridePendingTransition(R.anim.in_push_right_to_left, R.anim.push_down);
     }
 }

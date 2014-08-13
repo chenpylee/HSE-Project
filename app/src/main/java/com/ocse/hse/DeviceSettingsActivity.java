@@ -162,7 +162,7 @@ public class DeviceSettingsActivity extends Activity {
     private void quitActivity()
     {
         finish();
-        overridePendingTransition(R.anim.in_just_show, R.anim.push_down);
+        overridePendingTransition(R.anim.in_just_show, R.anim.out_push_left_to_right);
     }
     private void goMainActivity()
     {
@@ -359,6 +359,8 @@ public class DeviceSettingsActivity extends Activity {
                             //deviceInfo.saveDeviceInfo(ServerSettingActivity.this);
                             deviceInfo.saveDeviceAndRegStatus(DeviceSettingsActivity.this);
                             //Go To Main
+                            quitActivity();
+                            /**
                             if(isReg)
                             {
                                 //back to main
@@ -369,6 +371,7 @@ public class DeviceSettingsActivity extends Activity {
                                 //go to main
                                 goMainActivity();
                             }
+                             **/
                         }
                         else if(result==-1)
                         {

@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -76,20 +77,45 @@ public class ServerSettingActivity extends Activity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        if(id==android.R.id.home)
+        {
+            quitActivity();
+            return true;
+        }
         if (id == R.id.action_settings) {
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_BACK:
+                quitActivity();
+                return true;
+            default:
+                break;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+    private void quitActivity()
+    {
+        finish();
+        overridePendingTransition(R.anim.in_just_show, R.anim.out_push_left_to_right);
+    }
+
     private void getDeviceRegistrationInfo()
     {
         serverIP=txtServerIP.getText().toString().trim();
         ApplicationController.saveServerIP(serverIP);
+        /**
         if(true) {
             goMainActivity();//在家用网络中无法直接连接OCSE服务器，所以直接跳过服务器验证步骤，进入任务列表界面
             return;
         }
+         **/
 
 
         RequestQueue mRequestQueue= VolleySingleton.getInstance().getRequestQueue();
@@ -109,16 +135,7 @@ public class ServerSettingActivity extends Activity {
                         result=response.getInt(ApplicationConstants.JSON_RESULT);
                         if(result==1) {
                             JSONObject content=response.getJSONObject(ApplicationConstants.JSON_CONTENT);
-                            /*
-                             "content": {
-                             "holder": "习近平",
-                             "model": "htc_0299",
-                             "version": "4.1.2",
-                             "IMEI": "1233211223",
-                             "OS": "android",
-                             "phoneNumber": "1344443333"
-                             },
-                             */
+
                             String msg=response.optString("message");
                             Toast.makeText(ServerSettingActivity.this, msg, Toast.LENGTH_SHORT).show();
 
@@ -132,7 +149,7 @@ public class ServerSettingActivity extends Activity {
                             //deviceInfo.saveDeviceInfo(ServerSettingActivity.this);
                             deviceInfo.saveDeviceAndRegStatus(ServerSettingActivity.this);
                             //Go To Main
-                            goMainActivity();
+                            //goMainActivity();
                         }
                         else if(result==-1)
                         {
@@ -157,7 +174,7 @@ public class ServerSettingActivity extends Activity {
                     progressDialog.dismiss();
                 }
                 Toast.makeText(ServerSettingActivity.this,"连接服务器失败，进入开发模式",Toast.LENGTH_SHORT).show();
-                goMainActivity();
+                //goMainActivity();
             }
         };
 
@@ -199,13 +216,6 @@ public class ServerSettingActivity extends Activity {
     private void goDeviceSettingActivity()
     {
         Intent intent=new Intent(this,DeviceSettingsActivity.class);
-        startActivity(intent);
-        finish();
-        overridePendingTransition(R.anim.in_push_right_to_left,R.anim.push_down);
-    }
-    private void goMainActivity()
-    {
-        Intent intent=new Intent(this,MainActivity.class);
         startActivity(intent);
         finish();
         overridePendingTransition(R.anim.in_push_right_to_left,R.anim.push_down);

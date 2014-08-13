@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">HSE现场督察管理</string>
+    <string name="app_name">HSE现场督察</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_nfcread">HSE资格确认</string>
@@ -9,6 +9,7 @@
     <string name="no_nfc">本型号手机不支持NFC读取</string>
     <string name="nfc_disabled">NFC功能被关闭. 请进入设置菜单开启NFC设置.</string>
     <string name="action_task_refresh">刷新</string>
+    <string name="action_task_download">下载离线数据</string>
     <string name="action_task_settings">设置终端信息</string>
     <string name="title_activity_device_settings">终端信息</string>
     <string name="label_device_holder">持有人姓名：</string>
@@ -28,10 +29,12 @@
     <string name="title_section1">证件检查</string>
     <string name="title_section2">隐患记录</string>
     <string name="title_section3">现场评分</string>
+    <string name="title_section4">隐患追踪</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="nfc_fragment_name">NFC卡识别</string>
     <string name="record_fragment_name">隐患记录</string>
     <string name="evaluate_fragment_name">现场评分</string>
+    <string name="history_fragment_name">隐患追踪</string>
     <string name="title_activity_card_read">CardReadActivity</string>
     <string name="title_activity_card_read_tagID">卡TAG ID</string>
     <string name="title_activity_card_read_tagType">卡类型</string>
@@ -45,5 +48,24 @@
     <string name="title_activity_add_record">AddRecordActivity</string>
     <string name="title_activity_view_record">ViewRecordActivity</string>
     <string name="title_activity_edit_record">EditRecordActivity</string>
+    <string name="title_activity_function_list">FunctionListActivity</string>
+    <string name="title_activity_card_cbs">CardCBSActivity</string>
+    <string name="title_activity_card_jsy">CardJSYActivity</string>
+    <string name="title_activity_news_list">NewsListActivity</string>
+    <string name="title_activity_news_detail">NewsDetailActivity</string>
+    <string name="title_activity_evaluation_detail">EvaluationDetail</string>
+    <string name="title_activity_history_detail">HistoryDetail</string>
+    <string name="title_activity_safety_db_tab">安全检查细则</string>
+    <string name="title_safety_section1">安全装备和设备安全附件</string>
+    <string name="title_safety_section2">生产设备（设施）</string>
+    <string name="title_activity_safety_detail">SafetyDetailActivity</string>
+    <string name="title_activity_self_service_function_list">SelfServiceFunctionListActivity</string>
+    <string name="title_activity_self_check">SelfCheckActivity</string>
+    <string name="title_activity_self_check_history">SelfCheckHistoryActivity</string>
+    <string name="title_activity_check_detail">CheckDetailActivity</string>
+    <string name="title_activity_self_check_final_acitivity">SelfCheckFinalAcitivity</string>
+    <string name="title_activity_certificate_list">CertificateListActivity</string>
+    <string name="title_activity_view_image">ViewImageActivity</string>
+    <string name="title_activity_main_function_grid">MainFunctionGrid</string>
 
 </resources>

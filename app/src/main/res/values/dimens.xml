@@ -33,4 +33,36 @@
 
     <dimen name="photo_width">110dp</dimen>
     <dimen name="photo_height">110dp</dimen>
+    <!--Main Page Function List -->
+    <dimen name="row_service_title_textsize">14sp</dimen>
+    <!--News -->
+    <dimen name="row_divider_height">6dp</dimen>
+    <dimen name="row_news_title_text_size">16sp</dimen>
+    <dimen name="row_news_description_text_size">14sp</dimen>
+    <dimen name="row_news_time_text_size">14sp</dimen>
+
+    <!--Evaluation and Hisotry List-->
+    <dimen name="lvPrimaryTextSize">14sp</dimen>
+    <dimen name="lvSecondaryTextSize">12sp</dimen>
+
+    <dimen name="lvHdrItemHeight">45dp</dimen>
+    <dimen name="lvItemHeight">65dp</dimen>
+
+    <dimen name="lvHeadingPaddingLeft">8dp</dimen>
+    <dimen name="lvHeadingTextSize">14sp</dimen>
+
+    <dimen name="lvPrimaryPaddingTop">6dp</dimen>
+    <dimen name="lvPrimaryPaddingBottom">1dp</dimen>
+    <dimen name="lvPrimaryPaddingLeft">8dp</dimen>
+
+    <dimen name="lvSecondaryPaddingTop">2dp</dimen>
+    <dimen name="lvSecondaryPaddingBottom">6dp</dimen>
+    <dimen name="lvSecondaryPaddingLeft">8dp</dimen>
+
+    <dimen name="lvDividerHeight">1dp</dimen>
+    <dimen name="lvDividerMargin">15dp</dimen>
+    <dimen name="lvSectionDividerMargin">5dp</dimen>
+    <dimen name="lvDividerWidth">1dp</dimen>
+
+    <dimen name="lvSectionDividerMarginTop">5dp</dimen>
     </resources>

@@ -1,0 +1,41 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.ocse.hse.Activities.CardJSYActivity">
+
+    <ImageView
+        android:id="@+id/imgNFCTag"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/icon_nfc_tag"
+        android:layout_centerHorizontal="true"
+        android:clickable="true"
+        />
+    <TextView
+        android:id="@+id/lblNFC"
+        android:layout_below="@id/imgNFCTag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:text="将驾驶员证件贴近手机背面进行识别"/>
+    <View
+        android:id="@+id/divider"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_below="@id/lblNFC"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/information_horizontal_divider_height"
+        android:background="@color/information_horizontal_divider_color"/>
+    <ListView
+        android:id="@+id/cardList"
+        android:layout_below="@id/divider"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </ListView>
+
+</RelativeLayout>

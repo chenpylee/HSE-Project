@@ -3,28 +3,43 @@ package com.ocse.hse.Activities;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.ocse.hse.Models.YWWDInfo;
 import com.ocse.hse.R;
 import com.ocse.hse.app.AppLog;
 import com.ocse.hse.app.ApplicationConstants;
+import com.ocse.hse.app.ApplicationController;
+import com.ocse.hse.app.VolleySingleton;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CBSCardActivity extends Activity {
 
@@ -41,6 +56,10 @@ public class CBSCardActivity extends Activity {
 
     TextView txtStatusZRZ,txtZSBH,txtFZJG,txtDJ,txtSGYWFW,txtZSDQSJ;//华北市场准入证
     String strStatusZRZ,strZSBH,strFZJG,strDJ,strSGYWFW,strZSDQSJ;
+    String strYWID;
+    //证件图片
+    Button btnShowGallery;
+    int cbsYWID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +70,15 @@ public class CBSCardActivity extends Activity {
         actionBar.setDisplayUseLogoEnabled(false);
         actionBar.setIcon(R.drawable.icon_hse_actionbar);
         actionBar.setTitle("承包商HSE资格确认证");
+        btnShowGallery=(Button)findViewById(R.id.btnShowGallery);
+        btnShowGallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //goCertificateListActivity();
+                //cbsYWID=3131;
+                getCertsListFromServer(cbsYWID);
+            }
+        });
         initContents();
         Bundle bundle=getIntent().getExtras();
         if(bundle!=null)
@@ -71,6 +99,7 @@ public class CBSCardActivity extends Activity {
                 }
             }
         }
+
     }
 
 
@@ -167,7 +196,7 @@ public class CBSCardActivity extends Activity {
         strDJ="";
         strSGYWFW="";
         strZSDQSJ="";
-
+        strYWID="";
         fillContents();
     }
     private void fillContents()
@@ -194,6 +223,14 @@ public class CBSCardActivity extends Activity {
         txtDJ.setText(strDJ);
         txtSGYWFW.setText(strSGYWFW);
         txtZSDQSJ.setText(strZSDQSJ);
+        if(strYWID.length()>0)
+        {
+            btnShowGallery.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            btnShowGallery.setVisibility(View.GONE);
+        }
     }
     private void validateCards()
     {
@@ -213,11 +250,20 @@ public class CBSCardActivity extends Activity {
             try {
                 Date hzsj = dateFormat.parse(strDQSJ);
                 int result=hzsj.compareTo(nowDate);
+                //计算过期时间-差额天数
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(hzsj);
+                long time1 = cal.getTimeInMillis();
+                cal.setTime(nowDate);
+                long time2 = cal.getTimeInMillis();
+                long between_days=(time2-time1)/(1000*3600*24);
+                String str_between_days=Long.toString(between_days);
+
                 if(result<0)//证件已经过期
                 {
-                    strStatusGSZZ="（已过期）";
+                    strStatusGSZZ="（已过期"+str_between_days+"天）";
                     txtStatusGSZZ.setTextColor(getResources().getColor(R.color.card_info_invalid_text_color));
-                    strAlertStatusGSZZ="已过期";
+                    strAlertStatusGSZZ="已过期"+str_between_days+"天";
                     txtAlertStatusGSZZ.setTextColor(getResources().getColor(R.color.card_info_invalid_text_color));
                 }
                 else
@@ -250,11 +296,20 @@ public class CBSCardActivity extends Activity {
                 Date hzrq=new Date(c.getTimeInMillis());
                 txtHZSJ.setText(dateFormat.format(hzrq));
                 int result=hzrq.compareTo(nowDate);
+                //计算过期时间-差额天数
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(hzrq);
+                long time1 = cal.getTimeInMillis();
+                cal.setTime(nowDate);
+                long time2 = cal.getTimeInMillis();
+                long between_days=(time2-time1)/(1000*3600*24);
+                String str_between_days=Long.toString(between_days);
+
                 if(result<0)//证件已经过期
                 {
-                    strStatusHSEZGZ="（已过期）";
+                    strStatusHSEZGZ="（已过期"+str_between_days+"天）";
                     txtAlertStatusHSEQRZ.setTextColor(getResources().getColor(R.color.card_info_invalid_text_color));
-                    strAlertStatusHSEQRZ="已过期";
+                    strAlertStatusHSEQRZ="已过期"+str_between_days+"天";
                     txtAlertStatusHSEQRZ.setTextColor(getResources().getColor(R.color.card_info_invalid_text_color));
                 }
                 else
@@ -281,11 +336,19 @@ public class CBSCardActivity extends Activity {
             try {
                 Date hzrq = dateFormat.parse(strZSDQSJ);
                 int result=hzrq.compareTo(nowDate);
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(hzrq);
+                long time1 = cal.getTimeInMillis();
+                cal.setTime(nowDate);
+                long time2 = cal.getTimeInMillis();
+                long between_days=(time2-time1)/(1000*3600*24);
+                String str_between_days=Long.toString(between_days);
+
                 if(result<0)//证件已经过期
                 {
-                    strStatusZRZ="（已过期）";
+                    strStatusZRZ="（已过期"+str_between_days+"天）";
                     txtStatusZRZ.setTextColor(getResources().getColor(R.color.card_info_invalid_text_color));
-                    strAlertStatusZRZZ="已过期";
+                    strAlertStatusZRZZ="已过期"+str_between_days+"天";
                     txtAlertStatusZRZZ.setTextColor(getResources().getColor(R.color.card_info_invalid_text_color));
                 }
                 else
@@ -350,6 +413,8 @@ public class CBSCardActivity extends Activity {
                 strFZJG=teamInfo.optString("FZJG","");
                 strSGYWFW=strSGFW;
                 strZSDQSJ=teamInfo.optString("ZSDQSJ","");
+                cbsYWID=teamInfo.optInt("YWID",0);
+                strYWID=Integer.toString(cbsYWID);
             }
             fillContents();
             validateCards();
@@ -357,5 +422,140 @@ public class CBSCardActivity extends Activity {
         {
             Toast.makeText(this,jsonException.getMessage().toString(),Toast.LENGTH_SHORT).show();
         }
+    }
+    private void goCertificateListActivity()
+    {
+
+        Intent detailIntent = new Intent(CBSCardActivity.this, CertificateListActivity.class);
+        //detailIntent.putExtra(ApplicationConstants.APP_BUNDLE_CARD_INFO_JSON_KEY, contentJsonObject.toString());
+        detailIntent.putExtra(ApplicationConstants.APP_BUNDLE_CBS_YWID_KEY, cbsYWID);
+        startActivity(detailIntent);
+        overridePendingTransition(R.anim.in_push_right_to_left, R.anim.push_down);
+
+
+    }
+
+    private void getCertsListFromServer(final int YWID)
+    {
+        RequestQueue mRequestQueue= VolleySingleton.getInstance().getRequestQueue();
+        final ProgressDialog progressDialog = ProgressDialog.show(this, "HSE服务器", "正在获取证件照片...");
+        Response.Listener<JSONObject> listener=new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    if(progressDialog!=null) {
+                        progressDialog.dismiss();
+                    }
+                    AppLog.d(response.toString());
+                    int result = -1;
+                    if(response.has(ApplicationConstants.JSON_RESULT))
+                    {
+
+                        result=response.getInt(ApplicationConstants.JSON_RESULT);
+                        if(result==1) {
+                            ArrayList<YWWDInfo> wdList=new ArrayList<YWWDInfo>();
+                            JSONObject content=response.getJSONObject(ApplicationConstants.JSON_CONTENT);
+                            JSONArray certArray=content.getJSONArray("certs_list");
+                            if(certArray.length()>0)
+                            {
+                                YWWDInfo.clearYWWDInDB(YWID);
+                            }
+                            for (int i=0; i<certArray.length(); i++) {
+                                JSONObject item = certArray.getJSONObject(i);
+                                String ZLLB = "", WDMC = "", WDLJ = "";
+
+                                if (!item.isNull("ZLLB")) {
+                                    ZLLB = item.optString("ZLLB", "");
+                                }
+                                if (!item.isNull("WDMC")) {
+                                    WDMC = item.optString("WDMC", "");
+                                }
+                                if (!item.isNull("WDLJ")) {
+                                    WDLJ = item.optString("WDLJ", "");
+                                }
+                                AppLog.d("YWID:"+YWID+" ZLLB:"+ZLLB+" WDMC:"+WDMC+" WDLJ:"+WDLJ);
+                                if(YWWDInfo.isPic(WDLJ)) {
+                                    YWWDInfo ywwd = new YWWDInfo(YWID, ZLLB, WDMC, WDLJ);
+                                    ywwd.updateJCDWInDB();
+                                    wdList.add(ywwd);
+                                }
+                            }
+                            //JcrwInfo.getAllJcrwInDB();
+                            if(wdList.size()>0)
+                            {
+                                //Go to Cert Type List
+                                goCertificateListActivity();
+                            }
+                            else
+                            {
+                                //POP UP Alert
+                                showMessage("承包商证件图片","暂无此承包商证件图片资料");
+                            }
+                        }
+                        else if(result==-1)
+                        {
+                            String msg=response.optString("message");
+                            //Toast.makeText(CBSCardActivity.this, msg, Toast.LENGTH_SHORT).show();
+                            showMessage("承包商证件图片","暂无此承包商证件图片资料");
+                        }
+                    }
+                }catch (JSONException e)
+                {
+                    AppLog.e(e.getMessage());
+                }
+
+            }
+        };
+        Response.ErrorListener errorListener= new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                AppLog.e(error.getMessage());
+                if(progressDialog!=null) {
+                    progressDialog.dismiss();
+                }
+                Toast.makeText(CBSCardActivity.this,"连接服务器失败",Toast.LENGTH_SHORT).show();
+            }
+        };
+
+
+        HashMap<String,String> params=new HashMap<String, String>();
+        params.put("ywid",Integer.toString(YWID));
+
+        String baseURL="http://"+ApplicationController.getServerIP();
+        String urlString=baseURL;
+        Uri.Builder builder = new Uri.Builder();
+        try {
+            URL url = new URL(baseURL);
+
+            builder = new Uri.Builder()
+                    .scheme(url.getProtocol())
+                    .encodedAuthority(url.getAuthority())
+                    .appendPath("api")
+                    .appendPath("get_cbs_pics.php");
+            for (Map.Entry<String, String> entry : params.entrySet()) {
+                builder.appendQueryParameter(entry.getKey(), entry.getValue());
+            }
+            urlString=builder.build().toString();
+        }catch (Exception e)
+        {
+            AppLog.e(e.getMessage());
+        }
+
+        AppLog.d(urlString);
+        JsonObjectRequest mJsonObjectRequest=new JsonObjectRequest(urlString,null,listener,errorListener);
+
+        if(mRequestQueue!=null) {
+            mRequestQueue.add(mJsonObjectRequest);
+            AppLog.d("star loading:"+urlString);
+            mRequestQueue.start();
+        }
+    }
+
+    private void showMessage(String title,String message)
+    {
+        AlertDialog dialog= new AlertDialog.Builder(this).setNeutralButton("确定", null).create();
+        dialog.setTitle(title);
+        dialog.setMessage(message);
+        dialog.show();
     }
 }

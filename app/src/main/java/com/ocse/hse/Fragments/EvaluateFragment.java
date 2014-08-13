@@ -2,15 +2,25 @@ package com.ocse.hse.Fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
+import com.ocse.hse.Activities.CheckTabActivity;
 import com.ocse.hse.Interfaces.OnFragmentInteractionListener;
+import com.ocse.hse.Models.CheckLv1Adapter;
+import com.ocse.hse.Models.CheckRulesInfo;
 import com.ocse.hse.R;
 import com.ocse.hse.app.AppLog;
+import com.ocse.hse.app.ApplicationConstants;
+import com.ocse.hse.app.ApplicationController;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,6 +42,8 @@ public class EvaluateFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    ListView listView;
+    CheckLv1Adapter lv1Adapter;
 
     /**
      * Use this factory method to create a new instance of
@@ -100,5 +112,58 @@ public class EvaluateFragment extends Fragment {
         // Workaround to avoid NPE from support library bug:
         super.onSaveInstanceState(outState);
     }
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState)
+    {
+        listView=(ListView)view.findViewById(R.id.listView);
+        //lv1Adapter=new EvaluationAdapter(getActivity());
+        //listView.setAdapter(lv1Adapter);
+        ArrayList<String> lv1List=new ArrayList<String>();
+        String taskID=ApplicationController.getCurrentTaskID();
+        lv1List= CheckRulesInfo.getLv1List(taskID);
+        lv1Adapter=new CheckLv1Adapter(getActivity(),lv1List,ApplicationController.getCurrentOrganID());
+        listView.setAdapter(lv1Adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(position>0) {
+                    goNextLv(ApplicationController.getCurrentTaskID(), lv1Adapter.getLv1(position));
+                }
+            }
+        });
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //evaluationAdapter.updateStatus();
+    }
+
+    public void goNextLv(String task_id,String check_lv1)
+    {
+        //区分有无二级目录
+        ArrayList<String> lv2List=CheckRulesInfo.getLv2List(task_id,check_lv1);
+        if(lv2List.size()>0)
+        {
+            //AppLog.i("Has next level");
+            goCheckLv2(task_id,check_lv1);
+        }
+        else
+        {
+            //AppLog.i("NO next level");
+        }
+    }
+
+    public void goCheckLv2(String organ_id,String check_lv1)
+    {
+        Intent intent=new Intent(getActivity(), CheckTabActivity.class);
+        //intent.putExtra(ApplicationConstants.APP_BUNDLE_CHECK_ORGAN_ID,organ_id);
+        intent.putExtra(ApplicationConstants.APP_BUNDLE_CHECK_RULE_LV1,check_lv1);
+        startActivity(intent);
+        getActivity().overridePendingTransition(R.anim.in_push_right_to_left, R.anim.push_down);
+    }
+
 
 }

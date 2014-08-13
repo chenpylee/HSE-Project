@@ -25,6 +25,7 @@ public class RecordInfoAdapter extends BaseAdapter {
     private Context context;
     private LayoutInflater mInflater;
     private ArrayList<RecordInfo> dataArrayList;
+    private ArrayList<JCDWInfo> organList;
     public RecordInfoAdapter(Context context,ArrayList<RecordInfo> inputList)
     {
         this.context=context;
@@ -37,6 +38,7 @@ public class RecordInfoAdapter extends BaseAdapter {
             RecordInfo item = it.next();
             this.dataArrayList.add(item);
         }
+        organList=JCDWInfo.getJCDWByJR(ApplicationController.getCurrentTaskID());
     }
     public void refillData(ArrayList<RecordInfo> inputList)
     {
@@ -71,7 +73,12 @@ public class RecordInfoAdapter extends BaseAdapter {
         {
             viewHolder=new ViewHolder();
             convertView=mInflater.inflate(R.layout.row_record_list,null);
+            viewHolder.txtOrganName=(TextView)convertView.findViewById(R.id.txtOrganName);
             viewHolder.txtCreated=(TextView)convertView.findViewById(R.id.txtCreated);
+            viewHolder.txtRuleLv1=(TextView)convertView.findViewById(R.id.txtRuleLv1);
+            viewHolder.txtRuleLv2=(TextView)convertView.findViewById(R.id.txtRuleLv2);
+            viewHolder.txtRuleLv3=(TextView)convertView.findViewById(R.id.txtRuleLv3);
+            viewHolder.txtRuleContent=(TextView)convertView.findViewById(R.id.txtRuleContent);
             viewHolder.txtDescription=(TextView)convertView.findViewById(R.id.txtDescription);
             viewHolder.txtContact=(TextView)convertView.findViewById(R.id.txtContact);
             viewHolder.txtPhone=(TextView)convertView.findViewById(R.id.txtPhone);
@@ -84,6 +91,23 @@ public class RecordInfoAdapter extends BaseAdapter {
             viewHolder=(ViewHolder)convertView.getTag();
         }
         RecordInfo item=this.dataArrayList.get(position);
+        String dwmc="";
+        String organID=item.getOrganID();
+        for(int i=0;i<organList.size();i++)
+        {
+            int jcdw_id=organList.get(i).getJR_DEPTID();
+            String jcdw_str_id=Integer.toString(jcdw_id);
+            if(jcdw_str_id.equals(organID))
+            {
+                dwmc=organList.get(i).getJR_DWMC();
+                break;
+            }
+        }
+        String ruleLv1=item.getRuleLv1();
+        String ruleLv2=item.getRuleLv2();
+        String ruleLv3=item.getRuleLv3();
+        String ruleContent=item.getRuleContent();
+
         String description=item.getDescription();
         String contact=item.getContact();
         String phone=item.getPhone();
@@ -102,7 +126,12 @@ public class RecordInfoAdapter extends BaseAdapter {
         {
             viewHolder.imgContainer.setVisibility(View.GONE);
         }
+        viewHolder.txtOrganName.setText(dwmc);
         viewHolder.txtCreated.setText(created);
+        viewHolder.txtRuleLv1.setText(ruleLv1);
+        viewHolder.txtRuleLv2.setText(ruleLv2);
+        viewHolder.txtRuleLv3.setText(ruleLv3);
+        viewHolder.txtRuleContent.setText(ruleContent);
         viewHolder.txtDescription.setText(description);
         viewHolder.txtContact.setText(contact);
         viewHolder.txtPhone.setText(phone);
@@ -118,7 +147,9 @@ public class RecordInfoAdapter extends BaseAdapter {
         return bitmap;
     }
     static class ViewHolder{
+        TextView txtOrganName;
         TextView txtCreated;
+        TextView txtRuleLv1,txtRuleLv2,txtRuleLv3,txtRuleContent;
         LinearLayout imgContainer;
         ImageView imgPreview;
         TextView txtDescription,txtContact,txtPhone;

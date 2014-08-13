@@ -29,12 +29,13 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.ocse.hse.Activities.CBSCardActivity;
 import com.ocse.hse.Activities.JSYCardActivity;
 import com.ocse.hse.Fragments.EvaluateFragment;
+import com.ocse.hse.Fragments.HistoryFragment;
 import com.ocse.hse.Fragments.NFCFragment;
 import com.ocse.hse.Fragments.RecordFragment;
 import com.ocse.hse.Interfaces.OnFragmentInteractionListener;
+import com.ocse.hse.Models.JcrwInfo;
 import com.ocse.hse.Models.OrganInfo;
 import com.ocse.hse.Models.TagBasicInfo;
-import com.ocse.hse.Models.TaskInfo;
 import com.ocse.hse.app.AppLog;
 import com.ocse.hse.app.ApplicationConstants;
 import com.ocse.hse.app.ApplicationController;
@@ -66,12 +67,13 @@ public class TabActivity extends Activity implements ActionBar.TabListener,OnFra
      */
     ViewPager mViewPager;
 
-    TaskInfo taskInfo;
+    JcrwInfo taskInfo;
     OrganInfo organInfo;
     //Fragments
     NFCFragment nfcFragment=null;
     RecordFragment recordFragment=null;
     EvaluateFragment evaluateFragment=null;
+    HistoryFragment historyFragment=null;
     //NFC Reading
     NfcAdapter mAdapter;
     PendingIntent mPendingIntent;
@@ -82,8 +84,8 @@ public class TabActivity extends Activity implements ActionBar.TabListener,OnFra
         Bundle bundle=getIntent().getExtras();
         if(bundle!=null)
         {
-            taskInfo=(TaskInfo)bundle.getSerializable(ApplicationConstants.APP_BUNDLE_TASK_INFO_KEY);
-            organInfo=(OrganInfo)bundle.getSerializable(ApplicationConstants.APP_BUNDLE_ORGAN_INFO_KEY);
+            taskInfo=(JcrwInfo)bundle.getSerializable(ApplicationConstants.APP_BUNDLE_TASK_INFO_KEY);
+            //organInfo=(OrganInfo)bundle.getSerializable(ApplicationConstants.APP_BUNDLE_ORGAN_INFO_KEY);
         }
         // Set up the action bar.
         final ActionBar actionBar = getActionBar();
@@ -94,14 +96,14 @@ public class TabActivity extends Activity implements ActionBar.TabListener,OnFra
         actionBar.setIcon(R.drawable.icon_hse_actionbar);
 
         if(taskInfo!=null) {
-            actionBar.setTitle(taskInfo.getTaskName());
+            actionBar.setTitle(taskInfo.getJR_MC());
         }
         if(organInfo!=null) {
             actionBar.setSubtitle("受检单位:"+organInfo.getOrganName());
         }
-        if(taskInfo!=null&&organInfo!=null)
+        if(taskInfo!=null)
         {
-            ApplicationController.saveCurrentTaskAndOrganID(taskInfo.getTaskID(),organInfo.getOrganID());
+            ApplicationController.saveCurrentTaskAndOrganID(Integer.toString(taskInfo.getJR_ID()),"0");
         }
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -219,9 +221,9 @@ public class TabActivity extends Activity implements ActionBar.TabListener,OnFra
 
             if(tagId.equals("2491012570"))
             {
-                tagId="2490449290";//王新平
+                //tagId="2490449290";//王新平
                 //tagId="2491406618";//
-                //tagId="2490992986";//内部准驾证，驾驶证，从业资格证 存在过期证件
+                tagId="2490992986";//内部准驾证，驾驶证，从业资格证 存在过期证件
             }
             if(tagId.equals("2491433066"))
             {
@@ -432,10 +434,12 @@ public class TabActivity extends Activity implements ActionBar.TabListener,OnFra
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        /**
         if (id == R.id.action_settings) {
             return true;
         }
-        else if(id==android.R.id.home)
+         **/
+        if(id==android.R.id.home)
         {
             quitActivity();
             return true;
@@ -505,6 +509,14 @@ public class TabActivity extends Activity implements ActionBar.TabListener,OnFra
                     fragment=evaluateFragment;
                     break;
                 }
+                case 3: {
+                    if(historyFragment==null)
+                    {
+                        historyFragment=HistoryFragment.newInstance("","");
+                    }
+                    fragment=historyFragment;
+                    break;
+                }
                 default: {
                     break;
                 }
@@ -515,7 +527,7 @@ public class TabActivity extends Activity implements ActionBar.TabListener,OnFra
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return 4;
         }
 
         @Override
@@ -528,6 +540,8 @@ public class TabActivity extends Activity implements ActionBar.TabListener,OnFra
                     return getString(R.string.title_section2).toUpperCase(l);
                 case 2:
                     return getString(R.string.title_section3).toUpperCase(l);
+                case 3:
+                    return getString(R.string.title_section4).toUpperCase(l);
             }
             return null;
         }

@@ -255,6 +255,7 @@ public class EditRecordActivity extends Activity {
         {
             File file= ApplicationController.getFile(DIR_RECORD_CONTENT, imageNameList.get(i));
             imageFilePathList.add(file.getAbsolutePath());
+
         }
     }
     private void listSavedPreviewImages()
@@ -270,6 +271,7 @@ public class EditRecordActivity extends Activity {
             File file= ApplicationController.getFile(DIR_RECORD_PREVIEW, imageNameList.get(i));
             Bitmap bitmap= BitmapFactory.decodeFile(file.getAbsolutePath().toString());
             imageBitmaps.add(bitmap);
+            AppLog.i("saved image:"+file.getName());
         }
     }
     private void loadImagesToPreview()
@@ -609,7 +611,7 @@ public class EditRecordActivity extends Activity {
 
 
         RecordInfo record=new RecordInfo(recordInfo.getIntRecordID(),record_task_id,record_organ_id,record_description,imageList,record_contact, record_phone,record_created, record_updated);
-        recordInfo.updateToDB();
+        record.updateToDB();
         recordSaved=true;
         quitActivity();
     }

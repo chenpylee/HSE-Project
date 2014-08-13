@@ -10,6 +10,9 @@ import com.ocse.hse.Models.DeviceInfo;
 import com.ocse.hse.Models.HSESQLiteHelper;
 
 import java.io.File;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by leehaining on 5/7/14.
@@ -100,6 +103,9 @@ public class ApplicationController extends Application {
         createDirectory(recordImagesPreviewFolder);
         File recordImagesContentFolder=new File(dir,"records/content");
         createDirectory(recordImagesContentFolder);
+        File recordResultsFolder=new File(dir,"records/result");
+        createDirectory(recordResultsFolder);
+
     }
     private static void createDirectory(File dir)
     {
@@ -143,6 +149,64 @@ public class ApplicationController extends Application {
         File dir = context.getFilesDir();
         File resultFile = new File(dir, directory+File.separator+fileName);
         return resultFile.exists();
+    }
+
+    //Evaluation Test
+    public static void saveEvaluationResult(String title,String pass)
+    {
+        SharedPreferences preferences = context.getSharedPreferences(ApplicationConstants.APP_PREFERENCE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(title, pass);
+        editor.commit();
+    }
+    public static String getEvaluationResult(String title)
+    {
+        SharedPreferences preferences = context.getSharedPreferences(ApplicationConstants.APP_PREFERENCE, Context.MODE_PRIVATE);
+        String result=preferences.getString(title,"");
+        return result;
+    }
+
+    public static String getCurrentTime()
+    {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
+        return dateFormat.format(date);
+    }
+    public static void saveCurrentCheckLv1(String lv1)
+    {
+        SharedPreferences preferences = context.getSharedPreferences(ApplicationConstants.APP_PREFERENCE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(ApplicationConstants.APP_PREFERENCE_CURRENT_CHECK_LV1, lv1);
+        editor.commit();
+    }
+    public static String getCurrentCheckLv1(){
+        SharedPreferences preferences = context.getSharedPreferences(ApplicationConstants.APP_PREFERENCE, Context.MODE_PRIVATE);
+        String currentCheckLv1=preferences.getString(ApplicationConstants.APP_PREFERENCE_CURRENT_CHECK_LV1,"");
+        return currentCheckLv1;
+    }
+    public static void saveCurrentCheckLv2(String lv2)
+    {
+        SharedPreferences preferences = context.getSharedPreferences(ApplicationConstants.APP_PREFERENCE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(ApplicationConstants.APP_PREFERENCE_CURRENT_CHECK_LV2, lv2);
+        editor.commit();
+    }
+    public static String getCurrentCheckLv2(){
+        SharedPreferences preferences = context.getSharedPreferences(ApplicationConstants.APP_PREFERENCE, Context.MODE_PRIVATE);
+        String currentCheckLv2=preferences.getString(ApplicationConstants.APP_PREFERENCE_CURRENT_CHECK_LV2,"");
+        return currentCheckLv2;
+    }
+    public static void saveCurrentCheckLv3(String lv3)
+    {
+        SharedPreferences preferences = context.getSharedPreferences(ApplicationConstants.APP_PREFERENCE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(ApplicationConstants.APP_PREFERENCE_CURRENT_CHECK_LV3, lv3);
+        editor.commit();
+    }
+    public static String getCurrentCheckLv3(){
+        SharedPreferences preferences = context.getSharedPreferences(ApplicationConstants.APP_PREFERENCE, Context.MODE_PRIVATE);
+        String currentCheckLv3=preferences.getString(ApplicationConstants.APP_PREFERENCE_CURRENT_CHECK_LV3,"");
+        return currentCheckLv3;
     }
 
 }

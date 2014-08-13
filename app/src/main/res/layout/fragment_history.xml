@@ -1,0 +1,50 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ocse.hse.Fragments.HistoryFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <RelativeLayout
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/lvHdrItemHeight"
+        android:clickable="false"
+        >
+
+        <View
+            android:id="@+id/item_separator"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/lvDividerHeight"
+            android:background="@color/lvHeaderDividerColor"
+            android:layout_marginTop="@dimen/lvSectionDividerMarginTop"
+            />
+
+        <TextView
+            android:textIsSelectable="false"
+            android:id="@+id/lv_list_hdr"
+            android:textColor="@color/lvHeaderTextColor"
+            android:gravity="bottom|left"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_above="@id/item_separator"
+            android:layout_alignParentLeft="true"
+            style="@style/listViewHeaderItem"
+            android:text="历史隐患记录"
+            />
+    </RelativeLayout>
+    <View
+        android:id="@+id/divider"
+        android:layout_below="@id/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/information_horizontal_divider_height"
+        android:background="@color/information_horizontal_divider_color"/>
+    <ListView
+        android:id="@+id/recordList"
+        android:layout_below="@id/divider"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</RelativeLayout>

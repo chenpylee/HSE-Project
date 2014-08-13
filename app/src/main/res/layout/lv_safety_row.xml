@@ -1,0 +1,54 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    tools:context=".MainActivity"
+    style="@style/listViewItem"
+    android:clickable="false"
+    android:background="@android:drawable/list_selector_background"
+    android:descendantFocusability="blocksDescendants"
+    >
+
+    <View
+        android:id="@+id/item_separator"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/lvDividerHeight"
+        android:background="@color/lvDividerColor"/>
+
+    <ImageView
+        style="@style/listViewItemButtonStyle"
+        android:src="@drawable/ic_details"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:id="@+id/button"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:clickable="false"
+        />
+
+
+    <View
+        android:id="@+id/vertical_divider"
+        android:visibility="gone"
+        style="@style/listViewVerticalDivider"
+        android:layout_height="fill_parent"
+        android:layout_toLeftOf="@id/button"
+        />
+
+    <TextView
+        android:textIsSelectable="false"
+        android:id="@+id/lv_item_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        style="@style/listViewPrimaryDetail"
+        android:layout_toLeftOf="@id/vertical_divider"
+        android:ellipsize="marquee"
+        android:singleLine="false"
+        android:maxLines="2"
+        android:layout_alignParentLeft="true"
+        />
+
+
+</RelativeLayout>

@@ -17,5 +17,18 @@
     <color name="btn_pressed_color">#b3b3b3</color>
     <color name="btn_color">#00ffffff</color>
     <!--Images-->
+    <!--Main Page Function List-->
+    <color name="row_service_title">#3b3b3b</color>
+    <color name="row_service_content">#9fa0a0</color>
+    <!--News -->
+    <color name="row_content">#3b3b3b</color>
+    <color name="row_title">#9fa0a0</color>
+    <!--Evaluation List-->
+    <color name="lvHeaderTextColor">#168686</color>
+    <color name="primaryTextColor">#333333</color>
+    <color name="secondaryTextColor">#777777</color>
+    <color name="goblinGreen">#168686</color>
+    <color name="lvHeaderDividerColor">#168686</color>
+    <color name="lvDividerColor">#E0E0E0</color>
 
 </resources>

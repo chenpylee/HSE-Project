@@ -30,13 +30,15 @@ public class PhotoDetailActivity extends Activity {
         actionBar.setDisplayShowHomeEnabled(true);
         actionBar.setDisplayUseLogoEnabled(false);
         actionBar.setIcon(R.drawable.icon_hse_actionbar);
-        actionBar.setTitle("机动车准驾证");
+        actionBar.setTitle("照片");
         init();
         Bundle bundle=getIntent().getExtras();
         if(bundle!=null)
         {
             String imgUrl=bundle.getString(ApplicationConstants.APP_BUNDLE_PHOTO_URL_KEY);
+            String title=bundle.getString(ApplicationConstants.APP_BUNDLE_ACTION_BAR_TITLE_KEY,"照片");
             showImageByNetworkImageView(imgUrl);
+            actionBar.setTitle(title);
         }
 
     }
@@ -55,9 +57,6 @@ public class PhotoDetailActivity extends Activity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
         if(id==android.R.id.home)
         {
             quitActivity();

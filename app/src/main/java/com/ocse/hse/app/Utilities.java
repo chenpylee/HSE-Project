@@ -11,10 +11,10 @@ public class Utilities {
     public static String getCurrentTime()
     {
         Date now=new Date();
-
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         dateFormat.setTimeZone(TimeZone.getTimeZone("GMT+08:00"));
         String date = dateFormat.format(now);
         return date;
+
     }
 }

@@ -164,7 +164,7 @@ public class RecordFragment extends Fragment {
         super.onResume();
         AppLog.i("RecordFragment onResume");
         ArrayList<RecordInfo> cardList=RecordInfo.getRecordsFromDBByOrganID(ApplicationController.getCurrentTaskID(),ApplicationController.getCurrentOrganID());
-        if(cardList.size()!=dataArray.size())
+        //if(cardList.size()!=dataArray.size())
         {
             dataArray.clear();
             Iterator<RecordInfo> it = cardList.iterator();

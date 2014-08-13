@@ -24,7 +24,7 @@
                     android:layout_width="@dimen/person_avatar_width"
                     android:layout_height="@dimen/person_avatar_height"
                     android:background="@color/image_background"
-                    android:src="@drawable/card"/>
+                    />
                 <LinearLayout
                     android:layout_toRightOf="@id/imgRYZP"
                     android:layout_width="match_parent"

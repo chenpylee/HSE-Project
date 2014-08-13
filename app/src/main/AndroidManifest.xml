@@ -25,11 +25,6 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <!--
         <activity
@@ -143,6 +138,149 @@
             android:label="@string/title_activity_edit_record"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" >
+        </activity>
+
+        <activity
+            android:name="com.ocse.hse.Activities.CardCBSActivity"
+            android:label="@string/title_activity_card_cbs"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" >
+        </activity>
+        <activity
+            android:name="com.ocse.hse.Activities.CardJSYActivity"
+            android:label="@string/title_activity_card_jsy"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" >
+        </activity>
+        <activity
+            android:name="com.ocse.hse.Activities.NewsListActivity"
+            android:label="@string/title_activity_news_list"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" >
+        </activity>
+        <activity
+            android:name="com.ocse.hse.Activities.NewsDetailActivity"
+            android:label="@string/title_activity_news_detail"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" >
+        </activity>
+        <activity
+            android:name="com.ocse.hse.Activities.EvaluationDetail"
+            android:label="@string/title_activity_evaluation_detail"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" >
+        </activity>
+        <activity
+            android:name="com.ocse.hse.Activities.HistoryDetail"
+            android:label="@string/title_activity_history_detail"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" >
+        </activity>
+        <activity
+            android:name="com.ocse.hse.Activities.SafetyDBTabActivity"
+            android:label="@string/title_activity_safety_db_tab"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" >
+        </activity>
+        <activity
+            android:name="com.ocse.hse.Activities.SafetyDetailActivity"
+            android:label="@string/title_activity_safety_detail"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" >
+        </activity>
+        <activity
+            android:name="com.ocse.hse.Activities.SelfServiceFunctionListActivity"
+            android:label="@string/title_activity_self_service_function_list"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" >
+        </activity>
+        <activity
+            android:name="com.ocse.hse.Activities.SelfCheckActivity"
+            android:label="@string/title_activity_self_check"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" >
+        </activity>
+        <activity
+            android:name="com.ocse.hse.Activities.SelfCheckHistoryActivity"
+            android:label="@string/title_activity_self_check_history"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" >
+        </activity>
+        <activity
+            android:name="com.ocse.hse.Activities.CheckTabActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" >
+        </activity>
+        <activity
+            android:name="com.ocse.hse.Activities.CheckDetailActivity"
+            android:label="@string/title_activity_check_detail"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" >
+        </activity>
+        <activity
+            android:name="com.ocse.hse.Activities.AddCheckRecordActivity"
+            android:label="@string/title_activity_check_detail"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" >
+        </activity>
+        <activity
+            android:name="com.ocse.hse.Activities.SelfCheckFinalActivity"
+            android:label="@string/title_activity_self_check_final_acitivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" >
+        </activity>
+        <activity
+            android:name="com.ocse.hse.Activities.CertificateListActivity"
+            android:label="@string/title_activity_certificate_list"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" >
+        </activity>
+        <activity
+            android:name="com.ocse.hse.Activities.ViewImageActivity"
+            android:label="@string/title_activity_view_image"
+            android:theme="@style/AppTheme" >
+        </activity>
+        <activity
+            android:name="com.ocse.hse.Activities.AddHistoryUpdateActivity"
+            android:label="@string/title_activity_view_image"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" >
+        </activity>
+        <activity
+            android:name="com.ocse.hse.MainOfflineActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" >
+        </activity>
+        <activity
+            android:name="com.ocse.hse.TabOfflineActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" >
+        </activity>
+        <activity
+            android:name="com.ocse.hse.Activities.CertificateWDListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" >
+        </activity>
+        <activity
+            android:name="com.ocse.hse.ResultUploadActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" >
+        </activity>
+        <activity
+            android:name="com.ocse.hse.Activities.ResultsListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" >
+        </activity>
+        <activity
+            android:name="com.ocse.hse.Activities.MainFunctionGrid"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

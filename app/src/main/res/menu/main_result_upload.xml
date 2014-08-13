@@ -1,0 +1,7 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/action_task_upload"
+        android:icon="@drawable/ic_action_upload"
+        android:title="上传检查结果"
+        android:showAsAction="always"/>
+</menu>

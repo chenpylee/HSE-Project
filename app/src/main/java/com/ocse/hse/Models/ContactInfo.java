@@ -41,6 +41,9 @@ public class ContactInfo implements Serializable {
          "phone TEXT,"+
          "created TEXT"+
          */
+        //organID="0";
+        organID=ApplicationController.getCurrentTaskID();
+        organID=null;
         SQLiteDatabase db= ApplicationController.getSqLiteDatabase();
         String selection="organ_id=?";
         String[] selectionArgs=new String[]{organID};

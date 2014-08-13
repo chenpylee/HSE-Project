@@ -22,14 +22,16 @@ import com.android.volley.toolbox.NetworkImageView;
 import com.ocse.hse.R;
 import com.ocse.hse.app.AppLog;
 import com.ocse.hse.app.ApplicationConstants;
-import com.ocse.hse.app.ApplicationController;
 import com.ocse.hse.app.VolleySingleton;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class JSYCardActivity extends Activity {
@@ -193,9 +195,9 @@ public class JSYCardActivity extends Activity {
     {
         if(img_person_url.length()>5) {
             //profileAvatarView.setImageDrawable(null);
-            if(!img_person_url.startsWith("http")) {
-                img_person_url = "http://"+ ApplicationController.getServerIP()+img_person_url;
-            }
+            //if(!img_person_url.startsWith("http")) {
+           //img_person_url = "http://"+ ApplicationController.getServerIP()+"/api/get_image.php?url="+img_person_url;
+
             AppLog.i("照片："+img_person_url);
             showImageByNetworkImageView(img_person_url);
         }
@@ -247,11 +249,18 @@ public class JSYCardActivity extends Activity {
             try {
                 Date hzsj = dateFormat.parse(strHZSJ);
                 int result=hzsj.compareTo(nowDate);
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(hzsj);
+                long time1 = cal.getTimeInMillis();
+                cal.setTime(nowDate);
+                long time2 = cal.getTimeInMillis();
+                long between_days=(time2-time1)/(1000*3600*24);
+                String str_between_days=Long.toString(between_days);
                 if(result<0)//证件已经过期
                 {
-                    strStatusNBZJZ="（已过期）";
+                    strStatusNBZJZ="（已过期"+str_between_days+"天）";
                     txtStatusNBZJZ.setTextColor(getResources().getColor(R.color.card_info_invalid_text_color));
-                    strAlertStatusNBZJZ="已过期";
+                    strAlertStatusNBZJZ="已过期"+str_between_days+"天";
                     txtAlertStatusNBZJZ.setTextColor(getResources().getColor(R.color.card_info_invalid_text_color));
                 }
                 else
@@ -278,11 +287,18 @@ public class JSYCardActivity extends Activity {
             try {
                 Date hzrq = dateFormat.parse(strHZRQ);
                 int result=hzrq.compareTo(nowDate);
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(hzrq);
+                long time1 = cal.getTimeInMillis();
+                cal.setTime(nowDate);
+                long time2 = cal.getTimeInMillis();
+                long between_days=(time2-time1)/(1000*3600*24);
+                String str_between_days=Long.toString(between_days);
                 if(result<0)//证件已经过期
                 {
-                    strStatusJSZ="（已过期）";
+                    strStatusJSZ="（已过期"+str_between_days+"天）";
                     txtStatusJSZ.setTextColor(getResources().getColor(R.color.card_info_invalid_text_color));
-                    strAlertStatusJSZ="已过期";
+                    strAlertStatusJSZ="已过期"+str_between_days+"天";
                     txtAlertStatusJSZ.setTextColor(getResources().getColor(R.color.card_info_invalid_text_color));
                 }
                 else
@@ -309,11 +325,19 @@ public class JSYCardActivity extends Activity {
             try {
                 Date hzrq = dateFormat.parse(strXCZJYXQ);
                 int result=hzrq.compareTo(nowDate);
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(hzrq);
+                long time1 = cal.getTimeInMillis();
+                cal.setTime(nowDate);
+                long time2 = cal.getTimeInMillis();
+                long between_days=(time2-time1)/(1000*3600*24);
+                String str_between_days=Long.toString(between_days);
                 if(result<0)//证件已经过期
                 {
-                    strStatusCYZGZ="（已过期）";
+
+                    strStatusCYZGZ="（已过期"+str_between_days+"天）";
                     txtStatusCYZGZ.setTextColor(getResources().getColor(R.color.card_info_invalid_text_color));
-                    strAlertStatusCYZGZ="已过期";
+                    strAlertStatusCYZGZ="已过期"+str_between_days+"天";
                     txtAlertStatusCYZGZ.setTextColor(getResources().getColor(R.color.card_info_invalid_text_color));
                 }
                 else
@@ -346,6 +370,13 @@ public class JSYCardActivity extends Activity {
 
     }
     private void showImageByNetworkImageView(String imgUrl){
+        try {
+            imgUrl = URLEncoder.encode(imgUrl, "UTF-8");
+        }catch (UnsupportedEncodingException e)
+        {
+
+        }
+        imgUrl="http://218.28.88.188:8080/api/get_image.php?url="+imgUrl;
         final String imageUrl=imgUrl;
         if(imageUrl.length()<1)
             return;
@@ -365,16 +396,20 @@ public class JSYCardActivity extends Activity {
         ImageLoader imageLoader = new ImageLoader(mRequestQueue, imageCache);
         if(imgRYZP!=null) {
             imgRYZP.setTag("url");
+
             imgRYZP.setImageUrl(imageUrl, imageLoader);
+
             imgRYZP.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent detailIntent=new Intent(JSYCardActivity.this,PhotoDetailActivity.class);
                     detailIntent.putExtra(ApplicationConstants.APP_BUNDLE_PHOTO_URL_KEY,imageUrl);
+                    detailIntent.putExtra(ApplicationConstants.APP_BUNDLE_ACTION_BAR_TITLE_KEY,strXM);
                     startActivity(detailIntent);
                     overridePendingTransition(R.anim.in_push_right_to_left,R.anim.push_down);
                 }
             });
+
         }
     }
     private void parseContents(JSONObject object)
@@ -386,6 +421,10 @@ public class JSYCardActivity extends Activity {
                 strXB = "性别：" + driverInfo.optString("XB", "");
                 strSFZH = driverInfo.optString("SFZH", "");
                 img_person_url = driverInfo.optString("RYZP", "");
+                if(img_person_url.length()>5)
+                {
+                    img_person_url="http://10.52.1.131/"+img_person_url;
+                }
                 strGZDW = driverInfo.optString("GZDW", "");
                 strGZLB = driverInfo.optString("GZLB", "");
                 strGZ = driverInfo.optString("GZ", "");

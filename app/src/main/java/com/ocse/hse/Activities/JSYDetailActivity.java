@@ -19,11 +19,13 @@ import com.android.volley.toolbox.NetworkImageView;
 import com.ocse.hse.R;
 import com.ocse.hse.app.AppLog;
 import com.ocse.hse.app.ApplicationConstants;
-import com.ocse.hse.app.ApplicationController;
 import com.ocse.hse.app.VolleySingleton;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 public class JSYDetailActivity extends Activity {
 
@@ -43,7 +45,7 @@ public class JSYDetailActivity extends Activity {
         actionBar.setDisplayShowHomeEnabled(true);
         actionBar.setDisplayUseLogoEnabled(false);
         actionBar.setIcon(R.drawable.icon_hse_actionbar);
-        actionBar.setTitle("驾驶员个人信息");
+        actionBar.setTitle("个人信息");
         initContents();
         Bundle bundle=getIntent().getExtras();
         if(bundle!=null)
@@ -132,10 +134,6 @@ public class JSYDetailActivity extends Activity {
     private void fillContents()
     {
         if(img_person_url.length()>5) {
-            //profileAvatarView.setImageDrawable(null);
-            if(!img_person_url.startsWith("http")) {
-                img_person_url = "http://"+ ApplicationController.getServerIP()+img_person_url;
-            }
             AppLog.i("照片："+img_person_url);
             showImageByNetworkImageView(img_person_url);
         }
@@ -150,6 +148,13 @@ public class JSYDetailActivity extends Activity {
     }
 
     private void showImageByNetworkImageView(String imgUrl){
+        try {
+            imgUrl = URLEncoder.encode(imgUrl, "UTF-8");
+        }catch (UnsupportedEncodingException e)
+        {
+
+        }
+        imgUrl="http://218.28.88.188:8080/api/get_image.php?url="+imgUrl;
         final String imageUrl=imgUrl;
         if(imageUrl.length()<1)
             return;
@@ -175,6 +180,7 @@ public class JSYDetailActivity extends Activity {
                 public void onClick(View v) {
                     Intent detailIntent=new Intent(JSYDetailActivity.this,PhotoDetailActivity.class);
                     detailIntent.putExtra(ApplicationConstants.APP_BUNDLE_PHOTO_URL_KEY,imageUrl);
+                    detailIntent.putExtra(ApplicationConstants.APP_BUNDLE_ACTION_BAR_TITLE_KEY,strXM);
                     startActivity(detailIntent);
                     overridePendingTransition(R.anim.in_push_right_to_left,R.anim.push_down);
                 }
@@ -190,6 +196,10 @@ public class JSYDetailActivity extends Activity {
                 strXM = driverInfo.optString("XM", "");
                 strXB = "性别：" + driverInfo.optString("XB", "");
                 img_person_url = driverInfo.optString("RYZP", "");
+                if(img_person_url.length()>5)
+                {
+                    img_person_url="http://10.52.1.131/"+img_person_url;
+                }
                 strJG=driverInfo.optString("JG", "");
                 strCSRQ=driverInfo.optString("CSRQ", "");
                 strPRBDWSJ=driverInfo.optString("PRBDWSJ", "");
